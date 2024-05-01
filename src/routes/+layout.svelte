@@ -1,13 +1,15 @@
 <script>
 	import '../app.pcss'
-	import Header from './Header.svelte'
 	import './styles.css'
+	import Sidebar from './Sidebar.svelte'
+
 </script>
 
 <div class="app">
 	<!-- <Header></Header> -->
 
-	<main>
+	<Sidebar></Sidebar>
+	<main class="pl-[53px]">
 		<slot></slot>
 	</main>
 
