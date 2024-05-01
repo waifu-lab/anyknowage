@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Paperclip from 'lucide-svelte/icons/paperclip'
-	import Mic from 'lucide-svelte/icons/mic'
 	import CornerDownLeft from 'lucide-svelte/icons/corner-down-left'
 
 	import { Badge } from '$lib/components/ui/badge/index.js'
@@ -8,6 +7,7 @@
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js'
 	import { Textarea } from '$lib/components/ui/textarea/index.js'
 	import { Label } from '$lib/components/ui/label/index.js'
+	import Talkbox from '$lib/components/talkbox/talkbox.svelte'
 </script>
 
 <div class="grid h-screen w-full">
@@ -20,7 +20,9 @@
 				class="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4"
 			>
 				<Badge variant="outline" class="absolute right-3 top-3">Output</Badge>
-				<div class="flex-1" />
+				<div class="flex-1">
+					<Talkbox name="Anyknowledge" messages={["testmsg1","testmsg2","6 wow"]} avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"/>
+				</div>
 				<form
 					class="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
 				>
