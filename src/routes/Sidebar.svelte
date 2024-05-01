@@ -6,73 +6,90 @@
 	import MessageCircleMore from 'lucide-svelte/icons/message-circle-more'
 
 	import { Button } from '$lib/components/ui/button/index.js'
+	import { toggleMode } from 'mode-watcher'
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js'
+	import Sun from 'lucide-svelte/icons/sun'
+	import Moon from 'lucide-svelte/icons/moon'
 </script>
 
 <aside class="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
-    <div class="border-b p-2">
-        <Button variant="outline" size="icon" aria-label="Home">
-            <Triangle class="size-5 fill-foreground" />
-        </Button>
-    </div>
-    <nav class="grid gap-1 p-2">
-        <Tooltip.Root>
-            <Tooltip.Trigger asChild let:builder>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    class="rounded-lg bg-muted"
-                    aria-label="Talk"
-                    builders={[builder]}
-                >
-                    <MessageCircleMore class="size-5" />
-                </Button>
-            </Tooltip.Trigger>
-            <Tooltip.Content side="right" sideOffset={5}>Talk</Tooltip.Content>
-        </Tooltip.Root>
-        <Tooltip.Root>
-            <Tooltip.Trigger asChild let:builder>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    class="rounded-lg"
-                    aria-label="Archive"
-                    builders={[builder]}
-                >
-                    <Archive class="size-5" />
-                </Button>
-            </Tooltip.Trigger>
-            <Tooltip.Content side="right" sideOffset={5}>Archive</Tooltip.Content>
-        </Tooltip.Root>
-        <Tooltip.Root>
-            <Tooltip.Trigger asChild let:builder>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    class="rounded-lg"
-                    aria-label="API"
-                    builders={[builder]}
-                >
-                    <SquareTerminal class="size-5" />
-                </Button>
-            </Tooltip.Trigger>
-            <Tooltip.Content side="right" sideOffset={5}>API</Tooltip.Content>
-        </Tooltip.Root>
-    </nav>
-    <nav class="mt-auto grid gap-1 p-2">
-        <Tooltip.Root>
-            <Tooltip.Trigger asChild let:builder>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    class="mt-auto rounded-lg"
-                    aria-label="Setting"
-                    builders={[builder]}
-                >
-                    <Settings class="size-5" />
-                </Button>
-            </Tooltip.Trigger>
-            <Tooltip.Content side="right" sideOffset={5}>Setting</Tooltip.Content>
-        </Tooltip.Root>
-    </nav>
+	<div class="border-b p-2">
+		<Button variant="outline" size="icon" aria-label="Home">
+			<Triangle class="size-5 fill-foreground" />
+		</Button>
+	</div>
+	<nav class="grid gap-1 p-2">
+		<Tooltip.Root>
+			<Tooltip.Trigger asChild let:builder>
+				<Button
+					variant="ghost"
+					size="icon"
+					class="rounded-lg bg-muted"
+					aria-label="Talk"
+					builders={[builder]}
+				>
+					<MessageCircleMore class="size-5" />
+				</Button>
+			</Tooltip.Trigger>
+			<Tooltip.Content side="right" sideOffset={5}>Talk</Tooltip.Content>
+		</Tooltip.Root>
+		<Tooltip.Root>
+			<Tooltip.Trigger asChild let:builder>
+				<Button
+					variant="ghost"
+					size="icon"
+					class="rounded-lg"
+					aria-label="Archive"
+					builders={[builder]}
+				>
+					<Archive class="size-5" />
+				</Button>
+			</Tooltip.Trigger>
+			<Tooltip.Content side="right" sideOffset={5}>Archive</Tooltip.Content>
+		</Tooltip.Root>
+		<Tooltip.Root>
+			<Tooltip.Trigger asChild let:builder>
+				<Button
+					variant="ghost"
+					size="icon"
+					class="rounded-lg"
+					aria-label="API"
+					builders={[builder]}
+				>
+					<SquareTerminal class="size-5" />
+				</Button>
+			</Tooltip.Trigger>
+			<Tooltip.Content side="right" sideOffset={5}>API</Tooltip.Content>
+		</Tooltip.Root>
+	</nav>
+	<nav class="mt-auto grid gap-1 p-2">
+		<Tooltip.Root>
+			<Tooltip.Trigger asChild let:builder>
+				<Button on:click={toggleMode} variant="ghost" size="icon">
+					<Sun
+						class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+					/>
+					<Moon
+						class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+					/>
+					<span class="sr-only">Toggle theme</span>
+				</Button>
+			</Tooltip.Trigger>
+			<Tooltip.Content side="right" sideOffset={5}>Setting</Tooltip.Content>
+		</Tooltip.Root>
+		<Tooltip.Root>
+			<Tooltip.Trigger asChild let:builder>
+				<Button
+					variant="ghost"
+					size="icon"
+					class="mt-auto rounded-lg"
+					aria-label="Setting"
+					builders={[builder]}
+				>
+					<Settings class="size-5" />
+				</Button>
+			</Tooltip.Trigger>
+			<Tooltip.Content side="right" sideOffset={5}>Setting</Tooltip.Content>
+		</Tooltip.Root>
+	</nav>
 </aside>

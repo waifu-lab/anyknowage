@@ -14,6 +14,9 @@ dependencies:
   lucide-svelte:
     specifier: ^0.376.1
     version: 0.376.1(svelte@4.2.15)
+  mode-watcher:
+    specifier: ^0.3.0
+    version: 0.3.0(svelte@4.2.15)
   tailwind-merge:
     specifier: ^2.3.0
     version: 2.3.0
@@ -2071,6 +2074,14 @@ packages:
       pkg-types: 1.1.0
       ufo: 1.5.3
     dev: true
+
+  /mode-watcher@0.3.0(svelte@4.2.15):
+    resolution: {integrity: sha512-k8jjuTx94HaaRKWO6JDf8wL761hFatrTIHJKl+E+3JWcnv+GnMBH062zcLsy0lbCI3n7RZxxHaWi66auFnUO4g==}
+    peerDependencies:
+      svelte: ^4.0.0
+    dependencies:
+      svelte: 4.2.15
+    dev: false
 
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
