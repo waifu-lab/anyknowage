@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "anyknowage-server"
+version = "0.1.0"
+description = ""
+authors = ["phillychi3 <phillychi3@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+uvicorn = "^0.29.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
