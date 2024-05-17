@@ -4,11 +4,14 @@ version = "0.1.0"
 description = ""
 authors = ["phillychi3 <phillychi3@gmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.111.0"
 uvicorn = "^0.29.0"
+python-socketio = "^5.11.2"
+loguru = "^0.7.2"
 
 
 [build-system]
