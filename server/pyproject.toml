@@ -12,6 +12,8 @@ fastapi = "^0.111.0"
 uvicorn = "^0.29.0"
 python-socketio = "^5.11.2"
 loguru = "^0.7.2"
+haystack-ai = "^2.1.2"
+qdrant-haystack = "^3.5.0"
 
 
 [build-system]
