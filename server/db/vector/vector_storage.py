@@ -5,7 +5,7 @@ from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
 document_store = QdrantDocumentStore(
     ":memory:",
     index="Document",
-    embedding_dim=512,
+    embedding_dim=384,
     recreate_index=True,
     hnsw_config={"m": 16, "ef_construct": 64}
 )
