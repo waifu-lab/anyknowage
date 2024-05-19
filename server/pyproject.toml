@@ -15,7 +15,15 @@ loguru = "^0.7.2"
 haystack-ai = "^2.1.2"
 qdrant-haystack = "^3.5.0"
 fastembed-haystack = "^1.1.0"
+attrs = "^23.2.0"
+pymongo = "^4.7.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+select = ["E", "F"]
+ignore = ["E501","F401","E711","E712"]
+fixable = ["A", "B", "C", "D", "E", "F" ]
+unfixable = []

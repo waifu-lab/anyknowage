@@ -1,0 +1,36 @@
+version: '3'
+
+volumes:
+  MONGO_VOLUMES:
+  DQRANT_VOLUMES:
+
+services:
+  # redis:
+  #   image: redis:latest
+  #   container_name: redis
+  #   restart: always
+  #   ports:
+  #     - 6379:6379
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: anyknowledge
+      TZ: Asia/Taipei
+    volumes:
+      - MONGO_VOLUMES:/data/db
+    ports:
+      - '27017:27017'
+
+  # qdrant:
+  #   container_name: qdrant
+  #   image: qdrant/qdrant:latest
+  #   ports:
+  #     - '6333:6333'
+  #     - '6334:6334'
+  #   volumes:
+  #     - DQRANT_VOLUMES:/qdrant/storage

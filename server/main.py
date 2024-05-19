@@ -4,9 +4,11 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from typing import Union, List
 from loguru import logger
-from .socket_io import init_socketio, socket_router
+from socket_io import init_socketio, socket_router
+from routes.file import file_router
 
 app = FastAPI()
+
 
 @app.get("/ping")
 def ping():
@@ -14,6 +16,7 @@ def ping():
 
 
 app.include_router(socket_router)
+app.include_router(file_router)
 init_socketio(app)
 
 logger.info("server init")
