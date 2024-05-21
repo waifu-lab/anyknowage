@@ -32,7 +32,7 @@ class Mongodb:
             }
         )
 
-    def list_files(self) -> list:
+    def list_files(self) -> dict:
         db = self.client.anyknowledge
         files = db.files.find()
         return files

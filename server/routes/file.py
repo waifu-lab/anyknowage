@@ -1,6 +1,9 @@
 from fastapi import APIRouter, UploadFile
 from modules.knowladge.knowledge import add_knowledge
 from db import mongodb
+import json
+from bson import json_util
+
 
 file_router = APIRouter()
 
@@ -13,4 +16,5 @@ async def upload_file(file: UploadFile):
 
 @file_router.get("/file")
 async def get_file():
-    return mongodb.list_files()
+    files = json.loads(json_util.dumps(mongodb.list_files()))
+    return files

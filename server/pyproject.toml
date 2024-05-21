@@ -17,6 +17,7 @@ qdrant-haystack = "^3.5.0"
 fastembed-haystack = "^1.1.0"
 attrs = "^23.2.0"
 pymongo = "^4.7.2"
+sentence-transformers = "^2.7.0"
 
 [build-system]
 requires = ["poetry-core"]

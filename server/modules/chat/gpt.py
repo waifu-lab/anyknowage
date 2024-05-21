@@ -6,6 +6,7 @@ from haystack.components.generators import OpenAIGenerator
 from db import vectory
 from models.ai_models import GPTModel
 from models.basic_chat import BasicChat
+from haystack.utils import Secret
 
 prompt_template = """
 Using only the information contained in these documents return a brief answer (max 50 words).
@@ -21,7 +22,12 @@ Answer:
 
 class GPT(BasicChat):
     def __init__(self, model: GPTModel) -> None:
-        llm = OpenAIGenerator(model=str(model))
+        llm = OpenAIGenerator(
+            model=str(model),
+            api_key=Secret.from_token(
+                "sk-proj-XJWpuQD7lhp83FDWoSXJT3BlbkFJiopSFgEvNBm7Q2YvMjlo"
+            ),
+        )
         query_pipeline = Pipeline()
         query_pipeline.add_component(
             "text_embedder",
