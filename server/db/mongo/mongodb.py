@@ -31,3 +31,8 @@ class Mongodb:
                 "ext": ext,
             }
         )
+
+    def list_files(self) -> list:
+        db = self.client.anyknowledge
+        files = db.files.find()
+        return files
