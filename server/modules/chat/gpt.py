@@ -6,7 +6,9 @@ from haystack.components.generators import OpenAIGenerator
 from db import vectory
 from models.ai_models import GPTModel
 from models.basic_chat import BasicChat
-from haystack.utils import Secret
+from haystack_integrations.components.embedders.fastembed import FastembedTextEmbedder
+from haystack.components.readers import ExtractiveReader
+
 
 prompt_template = """
 Using only the information contained in these documents return a brief answer (max 50 words).
@@ -22,18 +24,14 @@ Answer:
 
 class GPT(BasicChat):
     def __init__(self, model: GPTModel) -> None:
-        llm = OpenAIGenerator(
-            model=str(model),
-            api_key=Secret.from_token(
-                "sk-proj-XJWpuQD7lhp83FDWoSXJT3BlbkFJiopSFgEvNBm7Q2YvMjlo"
-            ),
-        )
+        llm = OpenAIGenerator(model=str(model))
+        reader = ExtractiveReader()
+        reader.warm_up()
         query_pipeline = Pipeline()
         query_pipeline.add_component(
             "text_embedder",
-            SentenceTransformersTextEmbedder(
-                model="BAAI/bge-small-en-v1.5",
-                prefix="query:",
+            FastembedTextEmbedder(
+                model="BAAI/bge-small-en-v1.5", parallel=0, prefix="query:"
             ),
         )
         query_pipeline.add_component(
@@ -43,8 +41,10 @@ class GPT(BasicChat):
             "prompt_builder", PromptBuilder(template=prompt_template)
         )
         query_pipeline.add_component("generator", llm)
+        query_pipeline.add_component(instance=reader, name="reader")
         query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
         query_pipeline.connect("retriever.documents", "prompt_builder.documents")
+        query_pipeline.connect("retriever.documents", "reader.documents")
         query_pipeline.connect("prompt_builder", "generator")
         self.query_pipeline = query_pipeline
 
@@ -53,6 +53,8 @@ class GPT(BasicChat):
             {
                 "text_embedder": {"text": question},
                 "prompt_builder": {"question": question},
-            }
+                "reader": {"query": question, "top_k": 2},
+            },
+            include_outputs_from=["reader"],
         )
         return results

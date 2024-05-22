@@ -7,6 +7,9 @@ from loguru import logger
 from socket_io import init_socketio, socket_router
 from routes.file import file_router
 from routes.chat import chat_router
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 

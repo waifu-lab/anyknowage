@@ -10,6 +10,12 @@ class Mongodb:
             "mongodb://admin:password@localhost:27017",
             connect=False,
         )
+        # drop all data in anyknowledge database
+        self.client.anyknowledge.files.drop()
+        db = self.client.anyknowledge
+        fs = gridfs.GridFS(db)
+        for file in fs.find():
+            fs.delete(file._id)
 
     def get_file_sha1(self, sha1: str) -> str:
         db = self.client.anyknowledge

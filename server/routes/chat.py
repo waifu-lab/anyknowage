@@ -7,7 +7,10 @@ chat_router = APIRouter()
 
 @chat_router.post("/chat")
 async def new_chat(model: str, question: str):
-    gpt = GPTModel(model=model)
+    try:
+        gpt = GPTModel(model=model)
+    except ValueError:
+        return {"error": f"{model} cannot be found."}
     rt = GPT(gpt).ASK(question)
     print(rt)
     return rt

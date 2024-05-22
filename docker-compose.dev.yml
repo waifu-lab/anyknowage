@@ -26,11 +26,11 @@ services:
     ports:
       - '27017:27017'
 
-  # qdrant:
-  #   container_name: qdrant
-  #   image: qdrant/qdrant:latest
-  #   ports:
-  #     - '6333:6333'
-  #     - '6334:6334'
-  #   volumes:
-  #     - DQRANT_VOLUMES:/qdrant/storage
+  qdrant:
+    container_name: qdrant
+    image: qdrant/qdrant:latest
+    ports:
+      - '6333:6333'
+      - '6334:6334'
+    volumes:
+      - DQRANT_VOLUMES:/qdrant/storage
