@@ -20,6 +20,7 @@ pymongo = "^4.7.2"
 sentence-transformers = "^2.7.0"
 python-dotenv = "^1.0.1"
 accelerate = "^0.30.1"
+pypandoc = "^1.13"
 
 [build-system]
 requires = ["poetry-core"]

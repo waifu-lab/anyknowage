@@ -3,4 +3,5 @@ from models.file import File
 
 
 def parse_str(file: File):
-    basic_text_parser()
+    # TODO: 提取內部連結
+    return basic_text_parser(file.file)
