@@ -6,6 +6,6 @@ document_store = QdrantDocumentStore(
     "localhost",
     index="Document",
     embedding_dim=384,
-    recreate_index=False,
+    recreate_index=True,
     hnsw_config={"m": 16, "ef_construct": 64},
 )

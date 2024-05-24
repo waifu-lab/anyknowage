@@ -5,6 +5,14 @@ from haystack_integrations.components.embedders.fastembed import (
     FastembedDocumentEmbedder,
     FastembedTextEmbedder,
 )
+from haystack.components.converters import PyPDFToDocument
+from pathlib import Path
+
+
+def pdf_parser(file: Path):
+    converter = PyPDFToDocument()
+    docs = converter.run(sources=[file])
+    return basic_file_parser(docs["documents"])
 
 
 def basic_file_parser(text: list[Document]):

@@ -59,6 +59,7 @@ def add_knowledge(data: UploadFile | str):
         if file.name.split(".")[-1] in ext_to_parser:
             file.loader = ext_to_parser.get(file.name.split(".")[-1])
         else:
+            logger.error("File type not supported")
             return
 
     embedding = file.run()
