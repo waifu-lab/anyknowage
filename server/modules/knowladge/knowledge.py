@@ -4,9 +4,9 @@ from fastapi import UploadFile
 from models.file import File
 from urllib.parse import urlparse
 
-from .strtext import parse_str
-from .textfiles import parse_txt, parse_pdf, parse_docx, parse_markdown
-from .url import parse_url
+from modules.knowladge.strtext import parse_str
+from modules.knowladge.textfiles import parse_txt, parse_pdf, parse_docx, parse_markdown
+from modules.knowladge.url import parse_url
 from db import mongodb, vectory
 from haystack.document_stores.types import DuplicatePolicy
 

@@ -1,4 +1,4 @@
-from .basic import basic_text_parser
+from modules.knowladge.basic import basic_text_parser
 from models.file import File
 
 

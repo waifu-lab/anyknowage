@@ -1,4 +1,4 @@
-from basic import basic_file_parser, pdf_parser
+from modules.knowladge.basic import basic_file_parser, pdf_parser
 from models.file import File
 from tempfile import NamedTemporaryFile
 import pypandoc

@@ -1,5 +1,5 @@
-from .vector.vector_storage import document_store
-from .mongo.mongodb import Mongodb
+from db.vector.vector_storage import document_store
+from db.mongo.mongodb import Mongodb
 
 global vectory
 vectory = document_store
