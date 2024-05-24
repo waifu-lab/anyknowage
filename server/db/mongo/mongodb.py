@@ -2,6 +2,7 @@ import pymongo
 import gridfs
 import bson
 from uuid import UUID
+from haystack.dataclasses import Document
 
 
 class Mongodb:
@@ -23,7 +24,13 @@ class Mongodb:
         return file
 
     def add_file(
-        self, file_id: UUID, file: bytes, sha1: str, name: str, ext: str
+        self,
+        file_id: UUID,
+        file: bytes,
+        sha1: str,
+        name: str,
+        ext: str,
+        vector: list[Document],
     ) -> None:
         db = self.client.anyknowledge
         fs = gridfs.GridFS(db)
@@ -35,6 +42,7 @@ class Mongodb:
                 "fsid": fsid,
                 "name": name,
                 "ext": ext,
+                "vectoe_ids": [vector_id.id for vector_id in vector],
             }
         )
 

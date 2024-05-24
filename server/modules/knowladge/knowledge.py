@@ -64,5 +64,12 @@ def add_knowledge(data: UploadFile | str):
 
     embedding = file.run()
     logger.debug(embedding)
-    mongodb.add_file(file.uuid, file.file, file.hash, file.name, file.file_ext)
+    mongodb.add_file(
+        file.uuid,
+        file.file,
+        file.hash,
+        file.name,
+        file.file_ext,
+        embedding["documents"],
+    )
     vectory.write_documents(embedding["documents"], policy=DuplicatePolicy.OVERWRITE)
