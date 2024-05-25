@@ -5,6 +5,7 @@ import pypandoc
 from markdown import Markdown
 from io import StringIO
 from pathlib import Path
+import os
 
 
 def unmark_element(element, stream=None):
@@ -34,15 +35,24 @@ def parse_txt(file: File):
 
 
 def parse_pdf(file: File):
-    with NamedTemporaryFile() as temp:
+    with NamedTemporaryFile(delete=False) as temp:
         temp.write(file.file)
-        return pdf_parser(Path(temp.name))
+        temp_path = Path(temp.name)
+    try:
+        result = pdf_parser(temp_path)
+    finally:
+        os.remove(temp_path)
+    return result
 
 
 def parse_docx(file: File):
-    with NamedTemporaryFile() as temp:
+    with NamedTemporaryFile(delete=False) as temp:
         temp.write(file.file)
-        text = pypandoc.convert_file(Path(temp.name), "textfile", format="docx")
+        temp_path = Path(temp.name)
+    try:
+        text = pypandoc.convert_file(temp_path, "textfile", format="docx")
+    finally:
+        os.remove(temp_path)
     return basic_file_parser([file.get_Document(text)])
 
 

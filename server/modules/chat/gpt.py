@@ -11,7 +11,7 @@ from haystack.components.readers import ExtractiveReader
 
 
 prompt_template = """
-Using only the information contained in these documents return a brief answer (max 50 words).
+Using only the information contained in these documents return a brief answer (max 100 words).
 If the answer cannot be inferred from the documents, respond \"I don't know\".
 Documents:
 {% for doc in documents %}

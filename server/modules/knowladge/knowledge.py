@@ -63,6 +63,12 @@ def add_knowledge(data: UploadFile | str):
             return
 
     embedding = file.run()
+    if embedding is None:
+        logger.error("File is empty")
+        return
+    if embedding["documents"] == []:
+        logger.error("File has no content")
+        return
     logger.debug(embedding)
     mongodb.add_file(
         file.uuid,
