@@ -8,8 +8,11 @@ from socket_io import init_socketio, socket_router
 from routes.file import file_router
 from routes.chat import chat_router
 from dotenv import load_dotenv
+from db import get_mongodb, get_vectory
 
 load_dotenv()
+get_vectory()
+get_mongodb()
 
 app = FastAPI()
 

@@ -23,7 +23,8 @@ accelerate = "^0.30.1"
 pypandoc = "^1.13"
 markdown = "^3.6"
 pypdf = "^4.2.0"
-dramatiq = {extras = ["redis", "watch"], version = "^1.17.0"}
+dramatiq = {extras = ["radis"], version = "^1.17.0"}
+redis = "^5.0.4"
 
 [build-system]
 requires = ["poetry-core"]

@@ -3,7 +3,7 @@ from haystack_integrations.components.retrievers.qdrant import QdrantEmbeddingRe
 from haystack import Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.generators import OpenAIGenerator
-from db import vectory
+from db import get_vectory
 from models.ai_models import GPTModel
 from models.basic_chat import BasicChat
 from haystack_integrations.components.embedders.fastembed import FastembedTextEmbedder
@@ -35,7 +35,7 @@ class GPT(BasicChat):
             ),
         )
         query_pipeline.add_component(
-            "retriever", QdrantEmbeddingRetriever(document_store=vectory)
+            "retriever", QdrantEmbeddingRetriever(document_store=get_vectory())
         )
         query_pipeline.add_component(
             "prompt_builder", PromptBuilder(template=prompt_template)

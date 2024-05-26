@@ -1,20 +1,32 @@
 {
-    // 使用 IntelliSense 以得知可用的屬性。
-    // 暫留以檢視現有屬性的描述。
-    // 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python 偵錯工具: FastAPI",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "uvicorn",
-            "cwd": "${workspaceFolder}/server",
-            "args": [
-                "main:app",
-                "--reload"
-            ],
-            "jinja": true
-        }
-    ]
+	// 使用 IntelliSense 以得知可用的屬性。
+	// 暫留以檢視現有屬性的描述。
+	// 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Python 偵錯工具: dramatiq",
+			"type": "debugpy",
+			"request": "launch",
+			"module": "dramatiq",
+			"cwd": "${workspaceFolder}/server",
+			"args": ["-p 1","worker"]
+		},
+		{
+			"name": "Python 偵錯工具: FastAPI",
+			"type": "debugpy",
+			"request": "launch",
+			"module": "uvicorn",
+			"cwd": "${workspaceFolder}/server",
+			"args": ["main:app", "--reload"],
+			"jinja": true
+		}
+	],
+	"compounds": [
+		{
+			"name": "FastAPI + Dramatiq",
+			"configurations": ["Python 偵錯工具: FastAPI", "Python 偵錯工具: dramatiq"],
+			"stopAll": true
+		}
+	]
 }

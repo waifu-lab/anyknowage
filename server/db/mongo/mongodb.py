@@ -12,11 +12,12 @@ class Mongodb:
             connect=False,
         )
         # drop all data in anyknowledge database
-        self.client.anyknowledge.files.drop()
-        db = self.client.anyknowledge
-        fs = gridfs.GridFS(db)
-        for file in fs.find():
-            fs.delete(file._id)
+        # self.client.anyknowledge.files.drop()
+        # self.client.anyknowledge.tempfiles.drop()
+        # db = self.client.anyknowledge
+        # fs = gridfs.GridFS(db)
+        # for file in fs.find():
+        #     fs.delete(file._id)
 
     def get_file_sha1(self, sha1: str) -> str:
         db = self.client.anyknowledge
@@ -50,3 +51,23 @@ class Mongodb:
         db = self.client.anyknowledge
         files = db.files.find()
         return files
+
+    def add_temp_file(self, file: bytes) -> str:
+        db = self.client.anyknowledge
+        fs = gridfs.GridFS(db)
+        fsid = fs.put(file)
+        id = db.tempfiles.insert_one(
+            {
+                "fsid": fsid,
+            }
+        )
+        print(id)
+        return str(id.inserted_id)
+
+    def get_tempfile(self, file_id: str) -> bytes:
+        db = self.client.anyknowledge
+        fsid = db.tempfiles.find_one({"_id": bson.ObjectId(file_id)}).get("fsid")
+        fs = gridfs.GridFS(db)
+        print(fsid)
+        file = fs.get(fsid)
+        return file.read()

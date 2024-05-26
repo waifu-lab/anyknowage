@@ -2,13 +2,15 @@ from loguru import logger
 from fastapi import UploadFile
 
 from models.file import File
+from models.tempfile import Temp_File
 from urllib.parse import urlparse
 
 from modules.knowladge.strtext import parse_str
 from modules.knowladge.textfiles import parse_txt, parse_pdf, parse_docx, parse_markdown
 from modules.knowladge.url import parse_url
-from db import mongodb, vectory
+from db import get_mongodb, get_vectory
 from haystack.document_stores.types import DuplicatePolicy
+from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
 
 ext_to_parser = {
     "txt": parse_txt,
@@ -26,7 +28,7 @@ def is_url(url: str) -> bool:
         return False
 
 
-def add_knowledge(data: UploadFile | str):
+def add_knowledge(data: dict | str):
     """
     檢查各類條件
     做好前處理
@@ -35,9 +37,9 @@ def add_knowledge(data: UploadFile | str):
     if isinstance(data, str):
         file = File(name="text", file=data)
     else:
-        file = File(
-            name=data.filename, file=data.file.read(), ext=data.filename.split(".")[-1]
-        )
+        print(data)
+        filebytes = get_mongodb().get_tempfile(data["file_id"])
+        file = File(name=data["name"], file=filebytes, ext=data["ext"])
     file.get_sha1()
     logger.info(f"File {file.name} has been hashed")
     logger.debug(file.hash)
@@ -46,7 +48,7 @@ def add_knowledge(data: UploadFile | str):
         logger.error("File is empty")
         return
 
-    if mongodb.get_file_sha1(file.hash):
+    if get_mongodb().get_file_sha1(file.hash):
         logger.error("File already exists")
         return
 
@@ -70,7 +72,7 @@ def add_knowledge(data: UploadFile | str):
         logger.error("File has no content")
         return
     logger.debug(embedding)
-    mongodb.add_file(
+    get_mongodb().add_file(
         file.uuid,
         file.file,
         file.hash,
@@ -78,4 +80,6 @@ def add_knowledge(data: UploadFile | str):
         file.file_ext,
         embedding["documents"],
     )
-    vectory.write_documents(embedding["documents"], policy=DuplicatePolicy.OVERWRITE)
+    get_vectory().write_documents(
+        embedding["documents"], policy=DuplicatePolicy.OVERWRITE
+    )
