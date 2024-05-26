@@ -1,32 +1,35 @@
 import os
 import socketio
-from bidict import bidict
 from fastapi import APIRouter
 from loguru import logger
+from models.notify_leve import NotifyRequest
 
 pwd_path = os.path.dirname(os.path.abspath(__file__))
-server_sid = bidict()
-socket_router = APIRouter()
+socket_router = APIRouter(prefix="/socketio")
+sio = socketio.AsyncServer(async_mode="asgi")
+
+
+@socket_router.post("/notify")
+async def notify(request: NotifyRequest):
+    """
+    通知所有連接的client
+    """
+    await sio.emit("notify", request.model_dump(), namespace="/")
+    return {"status": "ok"}
 
 
 def init_socketio(app):
     async def connect(sid, environ):
-        servername = 'test'
-        server_sid[servername] = sid
-        await sio.emit('reply', f'{servername}已連接', namespace='/socketio')
+        await sio.emit("reply", "Some server已連接", namespace="/")
 
     async def message(sid, data):
-        await sio.emit('reply', f"{server_sid.inv[sid]}: {data}", namespace='/socketio')
+        await sio.emit("reply", f"{data}", namespace="/")
 
     async def disconnect(sid):
-        server_name = server_sid.inv[sid]
-        del server_sid[server_name]
-        await sio.emit('reply', f'{server_name}已斷線', namespace='/socketio')
+        await sio.emit("reply", "Some server已斷線", namespace="/")
 
-    sio = socketio.AsyncServer(async_mode="asgi")
-    sio.on("disconnect", disconnect, namespace="/socketio")
-    sio.on("chat message", message, namespace="/socketio")
-    sio.on("connect", connect, namespace="/socketio")
+    sio.on("disconnect", disconnect, namespace="/")
+    sio.on("chat message", message, namespace="/")
+    sio.on("connect", connect, namespace="/")
     app.mount("/", socketio.ASGIApp(socketio_server=sio))
     logger.info("socketio init")
-

@@ -1,24 +1,29 @@
-import attr
+from pydantic import BaseModel, field_validator
+from enum import Enum
 
 
-@attr.s
-class GPTModel:
-    models = attr.ib(
-        default=[
-            "gpt-4",
-            "gpt-3.5-turbo",
-            "gpt-3.5-turbo-0125",
-            "gpt-4-turbo",
-            "gpt-4o",
-            "gpt-4-turbo-preview",
-        ]
-    )
-    model = attr.ib(default=None)
+class Model(str, Enum):
+    gpt_4 = "gpt-4"
+    gpt_3_5_turbo = "gpt-3.5-turbo"
+    gpt_3_5_turbo_0125 = "gpt-3.5-turbo-0125"
+    gpt_4_turbo = "gpt-4-turbo"
+    gpt_4o = "gpt-4o"
+    gpt_4_turbo_preview = "gpt-4-turbo-preview"
 
-    @model.validator
-    def check_model(self, _, value):
-        if value not in self.models:
+
+class GPTModel(BaseModel):
+    model: Model
+
+    @field_validator("model")
+    def check_model(cls, value):
+        if not isinstance(value, Model):
             raise ValueError(f"{value} is not a valid model.")
+        return value
 
     def __str__(self):
-        return self.model
+        return self.model.value
+
+
+class GPT_Request(BaseModel):
+    model: GPTModel
+    question: str
