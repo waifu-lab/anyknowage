@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  autosize:
+    specifier: ^6.0.1
+    version: 6.0.1
   bits-ui:
     specifier: ^0.21.6
     version: 0.21.6(svelte@4.2.15)
@@ -1148,6 +1151,10 @@ packages:
       postcss: 8.4.38
       postcss-value-parser: 4.2.0
     dev: true
+
+  /autosize@6.0.1:
+    resolution: {integrity: sha512-f86EjiUKE6Xvczc4ioP1JBlWG7FKrE13qe/DxBCpe8GCipCq2nFw73aO8QEBKHfSbYGDN5eB9jXWKen7tspDqQ==}
+    dev: false
 
   /axobject-query@4.0.0:
     resolution: {integrity: sha512-+60uv1hiVFhHZeO+Lz0RYzsVHy5Wr1ayX0mwda9KPDVLNJgZ1T9Ny7VmFbLDzxsH0D87I86vgj3gFrjTJUYznw==}
