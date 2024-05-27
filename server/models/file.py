@@ -37,6 +37,11 @@ class File:
         )
         return self.document
 
+    def add_meta_to_document(self) -> Document:
+        if self.document:
+            self.document.meta.update({"title": self.name})
+        return self.document
+
     def run(self) -> dict:
         if self.loader:
             doc = self.loader(self)

@@ -3,15 +3,22 @@ from models.file import File
 from tempfile import NamedTemporaryFile
 from pathlib import Path
 import os
+from haystack.components.audio import LocalWhisperTranscriber
 
 
 def video_file_parser(file: File):
+    # not support video, only read sound
+    # not support on windows
     with NamedTemporaryFile(delete=False) as temp:
         temp.write(file.file)
         temp_path = Path(temp.name)
     try:
-        # TODO:
-        text = ...
+        whisper = LocalWhisperTranscriber(model="small")
+        whisper.warm_up()
+        transcription = whisper.run(sources=[temp_path])
+        text = transcription["documents"]
+        file.document = text[0]
+        text[0] = file.add_meta_to_document()
     finally:
         os.remove(temp_path)
-    return basic_file_parser([file.get_Document(text)])
+    return basic_file_parser(text)
