@@ -37,9 +37,12 @@ class File:
         )
         return self.document
 
-    def add_meta_to_document(self) -> Document:
+    def add_meta_to_document(self, meta=None) -> Document:
         if self.document:
-            self.document.meta.update({"title": self.name})
+            defaut_meta = {"title": self.name}
+            if meta:
+                defaut_meta.update(meta)
+            self.document.meta.update(defaut_meta)
         return self.document
 
     def run(self) -> dict:

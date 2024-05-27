@@ -2,31 +2,9 @@ from modules.knowladge.basic import basic_file_parser, pdf_parser
 from models.file import File
 from tempfile import NamedTemporaryFile
 import pypandoc
-from markdown import Markdown
-from io import StringIO
 from pathlib import Path
+from util.readme_unmark import unmark
 import os
-
-
-def unmark_element(element, stream=None):
-    if stream is None:
-        stream = StringIO()
-    if element.text:
-        stream.write(element.text)
-    for sub in element:
-        unmark_element(sub, stream)
-    if element.tail:
-        stream.write(element.tail)
-    return stream.getvalue()
-
-
-Markdown.output_formats["plain"] = unmark_element
-__md = Markdown(output_format="plain")
-__md.stripTopLevelTags = False
-
-
-def unmark(text):
-    return __md.convert(text)
 
 
 def parse_txt(file: File):

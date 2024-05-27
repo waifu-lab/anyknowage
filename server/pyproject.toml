@@ -26,6 +26,9 @@ pypdf = "^4.2.0"
 dramatiq = {extras = ["radis"], version = "^1.17.0"}
 redis = "^5.0.4"
 openai-whisper = {git = "https://github.com/openai/whisper.git"}
+requests = "^2.32.2"
+drissionpage = "^4.0.4.23"
+newspaper3k = "^0.2.8"
 
 [build-system]
 requires = ["poetry-core"]
