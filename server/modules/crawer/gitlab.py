@@ -1,5 +1,7 @@
 import requests
 import re
+import sys
+
 from util.readme_unmark import unmark
 from models.basic_crawer import BasicCrawer
 
@@ -8,11 +10,11 @@ class Gitlab(BasicCrawer):
     def __init__(self, url: str):
         self.url = url
         self.API_URL = "https://gitlab.com/api/v4/projects/"
-        self.RAW_URL = "https://gitlab.com"
+        self.RAW_URL = "https://gitlab.com/"
 
     def get(self):
         match = re.match(
-            "https:\/\/gitlab.com/([a-zA-Z0-9._]{1,30}/[a-zA-Z0-9._-]{1,30})", self.url
+            "https:\/\/gitlab.com/([a-zA-Z0-9._-]{1,30}/[a-zA-Z0-9._-]{1,30})", self.url
         )
         if match:
             res = requests.get(self.API_URL + match[1].replace("/", "%2F"))

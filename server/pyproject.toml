@@ -29,6 +29,7 @@ openai-whisper = {git = "https://github.com/openai/whisper.git"}
 requests = "^2.32.2"
 drissionpage = "^4.0.4.23"
 newspaper3k = "^0.2.8"
+lxml-html-clean = "^0.1.1"
 
 [build-system]
 requires = ["poetry-core"]
