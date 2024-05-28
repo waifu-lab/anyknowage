@@ -8,6 +8,10 @@ from urllib.parse import urlparse
 from modules.knowladge.strtext import parse_str
 from modules.knowladge.textfiles import parse_txt, parse_pdf, parse_docx, parse_markdown
 from modules.knowladge.url import parse_url
+from modules.knowladge.audio import audio_file_parser
+from modules.knowladge.video import video_file_parser
+from modules.knowladge.image import image_file_parser
+
 from db import get_mongodb, get_vectory
 from haystack.document_stores.types import DuplicatePolicy
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
@@ -17,6 +21,11 @@ ext_to_parser = {
     "pdf": parse_pdf,
     "docx": parse_docx,
     "md": parse_markdown,
+    "mp3": audio_file_parser,
+    "mp4": video_file_parser,
+    # "jpg": image_file_parser,
+    # "jpeg": image_file_parser,
+    # "png": image_file_parser,
 }
 
 

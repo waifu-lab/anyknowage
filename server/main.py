@@ -1,14 +1,13 @@
-from fastapi import FastAPI, HTTPException, Response, UploadFile
-from fastapi.responses import FileResponse
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from typing import Union, List
+from fastapi import FastAPI
 from loguru import logger
 from socket_io import init_socketio, socket_router
 from routes.file import file_router
 from routes.chat import chat_router
+from routes.text import text_router
+from routes.vector import vector_router
 from dotenv import load_dotenv
 from db import get_mongodb, get_vectory
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 get_vectory()
@@ -22,9 +21,24 @@ def ping():
     return {"ping": "pong"}
 
 
+origins = [
+    "http://localhost",
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(socket_router)
 app.include_router(file_router)
 app.include_router(chat_router)
+app.include_router(text_router)
+app.include_router(vector_router)
 init_socketio(app)
 
 logger.info("server init")

@@ -8,7 +8,6 @@ mongodb = None
 def get_vectory():
     global vectory
     if vectory is None:
-        print("callme")
         vectory = Qdrant().document_store
     return vectory
 

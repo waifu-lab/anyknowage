@@ -27,7 +27,10 @@ class File:
         return self.size == 0
 
     def get_sha1(self) -> str:
-        self.hash = hashlib.sha1(self.file).hexdigest()
+        if isinstance(self.file, str):
+            self.hash = hashlib.sha1(self.file.encode()).hexdigest()
+        else:
+            self.hash = hashlib.sha1(self.file).hexdigest()
         return self.hash
 
     def get_Document(self, text: str) -> Document:

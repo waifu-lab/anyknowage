@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile
-from db import get_mongodb, get_vectory
+from db import get_mongodb
 import json
 from bson import json_util
 from worker import ADD_knowledge
@@ -22,8 +22,3 @@ async def upload_file(file: UploadFile):
 async def get_file():
     files = json.loads(json_util.dumps(get_mongodb().list_files()))
     return files
-
-
-@file_router.get("/vector")
-async def list_vector():
-    return get_vectory().count_documents()
