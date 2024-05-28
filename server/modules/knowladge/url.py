@@ -1,7 +1,8 @@
 from modules.knowladge.basic import basic_file_parser
 from models.file import File
-from modules.crawer import Crawer, Github, Gitlab, twitter
+from modules.crawler import Crawer, Github, Gitlab, twitter
 import re
+from loguru import logger
 
 special_urls = {
     "github.com": Github,
@@ -12,13 +13,18 @@ special_urls = {
 
 
 def parse_url(file: File):
+    logger.info("🌐  Starting web crawing")
     domain = re.match(r"https?:\/\/((www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256})", file.file)[
         1
     ]
     if domain in special_urls:
         data = special_urls[domain](file.file).get()
     else:
-        data = Crawer(file.file).get()
+        try:
+            data = Crawer(file.file).get()
+        except Exception as e:
+            logger.error(e)
+            return None
     if data is None:
         return None
     doc = file.get_Document(data["Content"])

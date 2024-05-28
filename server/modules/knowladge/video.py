@@ -4,10 +4,12 @@ from tempfile import NamedTemporaryFile
 from pathlib import Path
 import os
 from haystack.components.audio import LocalWhisperTranscriber
+from loguru import logger
 
 
 def video_file_parser(file: File):
     # not support video, only read sound
+    logger.info("🎞️ Starting video file parsing")
     with NamedTemporaryFile(delete=False) as temp:
         temp.write(file.file)
         temp_path = Path(temp.name)

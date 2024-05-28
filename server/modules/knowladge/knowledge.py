@@ -1,8 +1,6 @@
 from loguru import logger
-from fastapi import UploadFile
 
 from models.file import File
-from models.tempfile import Temp_File
 from urllib.parse import urlparse
 
 from modules.knowladge.strtext import parse_str
@@ -14,7 +12,6 @@ from modules.knowladge.image import image_file_parser
 
 from db import get_mongodb, get_vectory
 from haystack.document_stores.types import DuplicatePolicy
-from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
 import io
 
 ext_to_parser = {
@@ -48,19 +45,18 @@ def add_knowledge(data: dict | str):
         file = File(name="text", file=data)
         file.istext = True
     else:
-        print(data)
         filebytes = get_mongodb().get_tempfile(data["file_id"])
         file = File(name=data["name"], file=filebytes, ext=data["ext"])
     file.get_sha1()
-    logger.info(f"File {file.name} has been hashed")
+    logger.info(f"📁 File {file.name} has been hashed")
     logger.debug(file.hash)
 
     if file.is_null():
-        logger.error("File is empty")
+        logger.error("❌ File is empty")
         return
 
     if get_mongodb().get_file_sha1(file.hash):
-        logger.error("File already exists")
+        logger.error("❌ File already exists")
         return
 
     if file.istext:
@@ -72,15 +68,15 @@ def add_knowledge(data: dict | str):
         if file.name.split(".")[-1] in ext_to_parser:
             file.loader = ext_to_parser.get(file.name.split(".")[-1])
         else:
-            logger.error("File type not supported")
+            logger.error("❌ File type not supported")
             return
 
     embedding = file.run()
     if embedding is None:
-        logger.error("File is empty")
+        logger.error("❌ File is empty")
         return
     if embedding["documents"] == []:
-        logger.error("File has no content")
+        logger.error("❌ File has no content")
         return
     logger.debug(embedding)
     if file.istext:
@@ -97,6 +93,8 @@ def add_knowledge(data: dict | str):
         file.file_ext,
         embedding["documents"],
     )
+    if not file.istext:
+        get_mongodb().delete_tempfile(data["file_id"])
     get_vectory().write_documents(
         embedding["documents"], policy=DuplicatePolicy.OVERWRITE
     )

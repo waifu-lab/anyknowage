@@ -13,7 +13,6 @@ file_router = APIRouter()
 async def upload_file(file: UploadFile):
     filedata = Temp_File(file)
     filedata_dict = json.loads(json_util.dumps(asdict(filedata)))
-    print(filedata_dict)
     ADD_knowledge.send(filedata_dict)
     return {"filename": file.filename}
 

@@ -1,7 +1,8 @@
 import pymongo
 import gridfs
 import bson
-from uuid import UUID
+from datetime import datetime
+from uuid import UUID, uuid4
 from haystack.dataclasses import Document
 
 
@@ -47,9 +48,21 @@ class Mongodb:
             }
         )
 
+    def delete_file(self, file_id: UUID) -> None:
+        db = self.client.anyknowledge
+        file = db.files.find_one({"file_id": bson.Binary.from_uuid(file_id)})
+        fs = gridfs.GridFS(db)
+        fs.delete(file.get("fsid"))
+        db.files.delete_one({"file_id": bson.Binary.from_uuid(file_id)})
+
     def list_files(self) -> dict:
         db = self.client.anyknowledge
         files = db.files.find()
+        return files
+
+    def get_file_history(self, pos: int = 0) -> list[dict]:
+        db = self.client.anyknowledge
+        files = db.files.find().skip(pos).limit(20)
         return files
 
     def add_temp_file(self, file: bytes) -> str:
@@ -61,13 +74,33 @@ class Mongodb:
                 "fsid": fsid,
             }
         )
-        print(id)
         return str(id.inserted_id)
 
     def get_tempfile(self, file_id: str) -> bytes:
         db = self.client.anyknowledge
         fsid = db.tempfiles.find_one({"_id": bson.ObjectId(file_id)}).get("fsid")
         fs = gridfs.GridFS(db)
-        print(fsid)
         file = fs.get(fsid)
         return file.read()
+
+    def delete_tempfile(self, file_id: str) -> None:
+        db = self.client.anyknowledge
+        fsid = db.tempfiles.find_one({"_id": bson.ObjectId(file_id)}).get("fsid")
+        fs = gridfs.GridFS(db)
+        fs.delete(fsid)
+        db.tempfiles.delete_one({"_id": bson.ObjectId(file_id)})
+
+    def add_chat(self, ask: str, answer: str) -> None:
+        db = self.client.anyknowledge
+        db.chats.insert_one(
+            {
+                "chat_id": str(uuid4).split("-")[0],
+                "ask": ask,
+                "answer": answer,
+                "time": datetime.now(),
+            }
+        )
+
+    def delete_chat(self, chat_id: str) -> None:
+        db = self.client.anyknowledge
+        db.chats.delete_one({"chat_id": chat_id})

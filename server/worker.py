@@ -1,5 +1,4 @@
 import dramatiq
-from models.tempfile import Temp_File
 from dramatiq.brokers.redis import RedisBroker
 from modules.knowladge.knowledge import add_knowledge
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
@@ -9,5 +8,5 @@ dramatiq.set_broker(redis_broker)
 
 
 @dramatiq.actor
-def ADD_knowledge(data: str | Temp_File):
+def ADD_knowledge(data: str | dict):
     add_knowledge(data)

@@ -7,7 +7,7 @@ from haystack_integrations.components.embedders.fastembed import (
 )
 from haystack.components.converters import PyPDFToDocument
 from pathlib import Path
-
+from loguru import logger
 # TODO: 中文分詞出現問題
 
 
@@ -18,6 +18,7 @@ def pdf_parser(file: Path):
 
 
 def basic_file_parser(text: list[Document]):
+    logger.info("</> Embedding text...")
     cleaner = DocumentCleaner()
     splitter = DocumentSplitter(split_by="word", split_length=100)
     splitted_docs = splitter.run(cleaner.run(text)["documents"])
@@ -27,8 +28,10 @@ def basic_file_parser(text: list[Document]):
         meta_fields_to_embed=text[0].meta.keys(),
         prefix="query:",
     )
+    logger.info("🔥 Warming up the embedder")
     document_embedder.warm_up()
     documents_with_embeddings = document_embedder.run(splitted_docs["documents"])
+    logger.info("🎉 Finished embedding text")
     return documents_with_embeddings
 
 

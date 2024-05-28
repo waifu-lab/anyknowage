@@ -5,14 +5,17 @@ import pypandoc
 from pathlib import Path
 from util.readme_unmark import unmark
 import os
+from loguru import logger
 
 
 def parse_txt(file: File):
+    logger.info("📄 Starting text file parsing")
     text = file.file.decode("utf-8")
     return basic_file_parser([file.get_Document(text)])
 
 
 def parse_pdf(file: File):
+    logger.info("📄 Starting pdf file parsing")
     with NamedTemporaryFile(delete=False) as temp:
         temp.write(file.file)
         temp_path = Path(temp.name)
@@ -24,6 +27,7 @@ def parse_pdf(file: File):
 
 
 def parse_docx(file: File):
+    logger.info("📄 Starting docx file parsing")
     with NamedTemporaryFile(delete=False) as temp:
         temp.write(file.file)
         temp_path = Path(temp.name)
@@ -35,6 +39,7 @@ def parse_docx(file: File):
 
 
 def parse_markdown(file: File):
+    logger.info("📄 Starting markdown file parsing")
     text = file.file.decode("utf-8")
     text = unmark(text)
     return basic_file_parser([file.get_Document(text)])
