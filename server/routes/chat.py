@@ -11,3 +11,14 @@ async def new_chat(request: GPT_Request):
     rt = GPT(request.model).ASK(request.question)
     get_mongodb().add_chat(request.question, rt)
     return rt
+
+
+@chat_router.delete("/chat")
+async def delete_chat(chat_id: str):
+    get_mongodb().delete_chat(chat_id)
+    return {"status": "ok"}
+
+
+@chat_router.get("/chats")
+async def get_chats(pos: int = 0):
+    return get_mongodb().get_chat_history(pos)

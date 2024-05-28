@@ -46,6 +46,7 @@ class Mongodb:
                 "name": name,
                 "ext": ext,
                 "vectoe_ids": [vector_id.id for vector_id in vector],
+                "time": datetime.now(),
             }
         )
 
@@ -61,7 +62,19 @@ class Mongodb:
         files = db.files.find()
         return files
 
-    def get_file_history(self, pos: int = 0) -> list[dict]:
+    def get_file_from_id(self, file_id: UUID) -> dict:
+        db = self.client.anyknowledge
+        file = db.files.find_one({"file_id": bson.Binary.from_uuid(file_id)})
+        return file
+
+    def download_file(self, file_id: UUID) -> bytes:
+        db = self.client.anyknowledge
+        file = db.files.find_one({"file_id": bson.Binary.from_uuid(file_id)})
+        fs = gridfs.GridFS(db)
+        file = fs.get(file.get("fsid"))
+        return file.read()
+
+    def get_file_history(self, pos: int = 0) -> dict:
         db = self.client.anyknowledge
         files = db.files.find().skip(pos).limit(20)
         return files
@@ -90,6 +103,11 @@ class Mongodb:
         fs = gridfs.GridFS(db)
         fs.delete(fsid)
         db.tempfiles.delete_one({"_id": bson.ObjectId(file_id)})
+
+    def get_chat_history(self, pos: int = 0) -> dict:
+        db = self.client.anyknowledge
+        chats = db.chats.find().skip(pos).limit(20)
+        return chats
 
     def add_chat(self, ask: str, answer: str) -> None:
         db = self.client.anyknowledge
