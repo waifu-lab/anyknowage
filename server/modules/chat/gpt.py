@@ -1,7 +1,6 @@
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack_integrations.components.retrievers.qdrant import QdrantEmbeddingRetriever
 from haystack import Pipeline
-from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.generators import OpenAIGenerator
 from db import get_vectory
 from models.ai_models import GPTModel
@@ -24,6 +23,8 @@ Answer:
 
 class GPT(BasicChat):
     def __init__(self, model: GPTModel) -> None:
+        if get_vectory().count_documents() == 0:
+            raise Exception("No documents in the database")
         llm = OpenAIGenerator(model=str(model))
         reader = ExtractiveReader()
         reader.warm_up()

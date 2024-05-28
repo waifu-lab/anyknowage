@@ -1,5 +1,5 @@
 from typing import Optional
-from attrs import define
+from attrs import define, field
 from haystack.dataclasses import Document
 from uuid import uuid4
 import hashlib
@@ -16,8 +16,10 @@ class File:
     document: Optional[Document] = None
     loader: Optional[callable] = None
     uuid = uuid4()
+    istext: bool = False
 
     def __init__(self, name: str, file: bytes | str, ext: str = ".txt") -> None:
+        self.istext = False
         self.name = name
         self.file = file
         self.size = len(file)
@@ -27,7 +29,7 @@ class File:
         return self.size == 0
 
     def get_sha1(self) -> str:
-        if isinstance(self.file, str):
+        if self.istext:
             self.hash = hashlib.sha1(self.file.encode()).hexdigest()
         else:
             self.hash = hashlib.sha1(self.file).hexdigest()

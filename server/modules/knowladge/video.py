@@ -8,7 +8,6 @@ from haystack.components.audio import LocalWhisperTranscriber
 
 def video_file_parser(file: File):
     # not support video, only read sound
-    # not support on windows
     with NamedTemporaryFile(delete=False) as temp:
         temp.write(file.file)
         temp_path = Path(temp.name)

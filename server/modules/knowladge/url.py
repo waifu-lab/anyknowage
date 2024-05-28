@@ -20,7 +20,7 @@ def parse_url(file: File):
     else:
         data = Crawer(file.file).get()
     if data is None:
-        return
-
+        return None
+    doc = file.get_Document(data["Content"])
     file.add_meta_to_document(data["Meta"])
-    basic_file_parser([file.get_Document(data["Content"])])
+    return basic_file_parser([doc])

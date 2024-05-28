@@ -15,6 +15,7 @@ from modules.knowladge.image import image_file_parser
 from db import get_mongodb, get_vectory
 from haystack.document_stores.types import DuplicatePolicy
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+import io
 
 ext_to_parser = {
     "txt": parse_txt,
@@ -45,6 +46,7 @@ def add_knowledge(data: dict | str):
 
     if isinstance(data, str):
         file = File(name="text", file=data)
+        file.istext = True
     else:
         print(data)
         filebytes = get_mongodb().get_tempfile(data["file_id"])
@@ -61,7 +63,7 @@ def add_knowledge(data: dict | str):
         logger.error("File already exists")
         return
 
-    if isinstance(data, str):
+    if file.istext:
         if is_url(data):
             file.loader = parse_url
         else:
@@ -81,6 +83,12 @@ def add_knowledge(data: dict | str):
         logger.error("File has no content")
         return
     logger.debug(embedding)
+    if file.istext:
+        tmp = io.BytesIO()
+        tmp.write(file.file.encode())
+        tmp.seek(0)
+        file.file = tmp
+
     get_mongodb().add_file(
         file.uuid,
         file.file,

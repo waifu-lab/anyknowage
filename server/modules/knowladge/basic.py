@@ -8,6 +8,8 @@ from haystack_integrations.components.embedders.fastembed import (
 from haystack.components.converters import PyPDFToDocument
 from pathlib import Path
 
+# TODO: 中文分詞出現問題
+
 
 def pdf_parser(file: Path):
     converter = PyPDFToDocument()
@@ -22,7 +24,7 @@ def basic_file_parser(text: list[Document]):
     document_embedder = FastembedDocumentEmbedder(
         model="intfloat/multilingual-e5-large",
         parallel=0,
-        meta_fields_to_embed=["title"],
+        meta_fields_to_embed=text[0].meta.keys(),
         prefix="query:",
     )
     document_embedder.warm_up()
@@ -30,16 +32,15 @@ def basic_file_parser(text: list[Document]):
     return documents_with_embeddings
 
 
-def basic_text_parser(text: str):
-    text_embedder = FastembedTextEmbedder(
-        model="intfloat/multilingual-e5-large",
-        parallel=0,
-        meta_fields_to_embed=["title"],
-        prefix="query:",
-    )
-    text_embedder.warm_up()
-    text_emnedding = text_embedder.run(text)
-    return text_emnedding
+# def basic_text_parser(text: str):
+#     text_embedder = FastembedTextEmbedder(
+#         model="intfloat/multilingual-e5-large",
+#         parallel=0,
+#         prefix="query:",
+#     )
+#     text_embedder.warm_up()
+#     text_emnedding = text_embedder.run(text)
+#     return text_emnedding
 
 
 if __name__ == "__main__":
