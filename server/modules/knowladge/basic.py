@@ -17,10 +17,13 @@ def pdf_parser(file: Path):
 
 def basic_file_parser(text: list[Document]):
     cleaner = DocumentCleaner()
-    splitter = DocumentSplitter(split_by="sentence", split_length=3)
+    splitter = DocumentSplitter(split_by="word", split_length=100)
     splitted_docs = splitter.run(cleaner.run(text)["documents"])
     document_embedder = FastembedDocumentEmbedder(
-        model="BAAI/bge-small-en-v1.5", parallel=0, meta_fields_to_embed=["title"]
+        model="intfloat/multilingual-e5-large",
+        parallel=0,
+        meta_fields_to_embed=["title"],
+        prefix="query:",
     )
     document_embedder.warm_up()
     documents_with_embeddings = document_embedder.run(splitted_docs["documents"])
@@ -29,7 +32,10 @@ def basic_file_parser(text: list[Document]):
 
 def basic_text_parser(text: str):
     text_embedder = FastembedTextEmbedder(
-        model="BAAI/bge-small-en-v1.5", parallel=0, meta_fields_to_embed=["title"]
+        model="intfloat/multilingual-e5-large",
+        parallel=0,
+        meta_fields_to_embed=["title"],
+        prefix="query:",
     )
     text_embedder.warm_up()
     text_emnedding = text_embedder.run(text)

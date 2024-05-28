@@ -31,7 +31,7 @@ class GPT(BasicChat):
         query_pipeline.add_component(
             "text_embedder",
             FastembedTextEmbedder(
-                model="BAAI/bge-small-en-v1.5", parallel=0, prefix="query:"
+                model="intfloat/multilingual-e5-large", parallel=0, prefix="query:"
             ),
         )
         query_pipeline.add_component(

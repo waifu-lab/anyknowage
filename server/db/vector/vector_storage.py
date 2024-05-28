@@ -8,7 +8,7 @@ class Qdrant:
         self.document_store = QdrantDocumentStore(
             "localhost",
             index="Document",
-            embedding_dim=384,
+            embedding_dim=1024,
             recreate_index=True,
             hnsw_config={"m": 16, "ef_construct": 64},
         )
