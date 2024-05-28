@@ -1,8 +1,9 @@
-import pymongo
-import gridfs
-import bson
 from datetime import datetime
 from uuid import UUID, uuid4
+
+import bson
+import gridfs
+import pymongo
 from haystack.dataclasses import Document
 
 

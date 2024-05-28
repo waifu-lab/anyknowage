@@ -1,13 +1,13 @@
+from db import get_mongodb, get_vectory
+from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
-from socket_io import init_socketio, socket_router
-from routes.file import file_router
 from routes.chat import chat_router
+from routes.file import file_router
 from routes.text import text_router
 from routes.vector import vector_router
-from dotenv import load_dotenv
-from db import get_mongodb, get_vectory
-from fastapi.middleware.cors import CORSMiddleware
+from socket_io import init_socketio, socket_router
 
 load_dotenv()
 get_vectory()

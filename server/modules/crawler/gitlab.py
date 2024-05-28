@@ -1,9 +1,9 @@
-import requests
 import re
 import sys
 
-from util.readme_unmark import unmark
+import requests
 from models.basic_crawer import BasicCrawer
+from util.readme_unmark import unmark
 
 
 class Gitlab(BasicCrawer):

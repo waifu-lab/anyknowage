@@ -1,6 +1,6 @@
-from modules.knowladge.basic import basic_file_parser
-from models.file import File
 from loguru import logger
+from models.file import File
+from modules.knowladge.basic import basic_file_parser
 
 
 def parse_str(file: File):

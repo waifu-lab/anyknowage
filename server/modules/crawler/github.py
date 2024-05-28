@@ -1,6 +1,7 @@
-from models.basic_crawer import BasicCrawer
-import requests
 import re
+
+import requests
+from models.basic_crawer import BasicCrawer
 from util.readme_unmark import unmark
 
 

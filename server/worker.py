@@ -1,7 +1,7 @@
 import dramatiq
 from dramatiq.brokers.redis import RedisBroker
-from modules.knowladge.knowledge import add_knowledge
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+from modules.knowladge.knowledge import add_knowledge
 
 redis_broker = RedisBroker(url="redis://127.0.0.1:6379/0")
 dramatiq.set_broker(redis_broker)

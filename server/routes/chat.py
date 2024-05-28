@@ -1,7 +1,7 @@
+from db import get_mongodb
 from fastapi import APIRouter
 from models.ai_models import GPT_Request
 from modules.chat.gpt import GPT
-from db import get_mongodb
 
 chat_router = APIRouter()
 

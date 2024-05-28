@@ -1,18 +1,17 @@
-from loguru import logger
-
-from models.file import File
+import io
 from urllib.parse import urlparse
-
-from modules.knowladge.strtext import parse_str
-from modules.knowladge.textfiles import parse_txt, parse_pdf, parse_docx, parse_markdown
-from modules.knowladge.url import parse_url
-from modules.knowladge.audio import audio_file_parser
-from modules.knowladge.video import video_file_parser
-from modules.knowladge.image import image_file_parser
 
 from db import get_mongodb, get_vectory
 from haystack.document_stores.types import DuplicatePolicy
-import io
+from loguru import logger
+from models.file import File
+from modules.knowladge.audio import audio_file_parser
+from modules.knowladge.image import image_file_parser
+from modules.knowladge.strtext import parse_str
+from modules.knowladge.textfiles import (parse_docx, parse_markdown, parse_pdf,
+                                         parse_txt)
+from modules.knowladge.url import parse_url
+from modules.knowladge.video import video_file_parser
 
 ext_to_parser = {
     "txt": parse_txt,

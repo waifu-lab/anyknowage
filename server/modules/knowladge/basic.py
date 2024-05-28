@@ -1,13 +1,12 @@
-from loguru import logger
-from haystack.dataclasses import Document
-from haystack.components.preprocessors import DocumentCleaner, DocumentSplitter
-from haystack_integrations.components.embedders.fastembed import (
-    FastembedDocumentEmbedder,
-    FastembedTextEmbedder,
-)
-from haystack.components.converters import PyPDFToDocument
 from pathlib import Path
+
+from haystack.components.converters import PyPDFToDocument
+from haystack.components.preprocessors import DocumentCleaner, DocumentSplitter
+from haystack.dataclasses import Document
+from haystack_integrations.components.embedders.fastembed import (
+    FastembedDocumentEmbedder, FastembedTextEmbedder)
 from loguru import logger
+
 # TODO: 中文分詞出現問題
 
 

@@ -1,8 +1,9 @@
+import hashlib
 from typing import Optional
+from uuid import uuid4
+
 from attrs import define, field
 from haystack.dataclasses import Document
-from uuid import uuid4
-import hashlib
 
 
 @define

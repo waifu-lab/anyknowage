@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from worker import ADD_knowledge
 from pydantic import BaseModel
+from worker import ADD_knowledge
 
 text_router = APIRouter()
 

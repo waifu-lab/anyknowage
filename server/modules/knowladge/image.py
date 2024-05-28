@@ -1,9 +1,10 @@
-from modules.knowladge.basic import basic_file_parser
-from models.file import File
-from tempfile import NamedTemporaryFile
-from pathlib import Path
-from loguru import logger
 import os
+from pathlib import Path
+from tempfile import NamedTemporaryFile
+
+from loguru import logger
+from models.file import File
+from modules.knowladge.basic import basic_file_parser
 
 
 def image_file_parser(file: File):

@@ -1,6 +1,7 @@
-from models.basic_crawer import BasicCrawer
 import re
+
 import requests
+from models.basic_crawer import BasicCrawer
 
 
 class twitter(BasicCrawer):

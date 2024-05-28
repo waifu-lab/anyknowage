@@ -1,13 +1,14 @@
-from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack_integrations.components.retrievers.qdrant import QdrantEmbeddingRetriever
-from haystack import Pipeline
-from haystack.components.generators import OpenAIGenerator
 from db import get_vectory
+from haystack import Pipeline
+from haystack.components.builders.prompt_builder import PromptBuilder
+from haystack.components.generators import OpenAIGenerator
+from haystack.components.readers import ExtractiveReader
+from haystack_integrations.components.embedders.fastembed import \
+    FastembedTextEmbedder
+from haystack_integrations.components.retrievers.qdrant import \
+    QdrantEmbeddingRetriever
 from models.ai_models import GPTModel
 from models.basic_chat import BasicChat
-from haystack_integrations.components.embedders.fastembed import FastembedTextEmbedder
-from haystack.components.readers import ExtractiveReader
-
 
 prompt_template = """
 Using only the information contained in these documents return a brief answer (max 100 words).

@@ -1,11 +1,12 @@
-from modules.knowladge.basic import basic_file_parser, pdf_parser
-from models.file import File
-from tempfile import NamedTemporaryFile
-import pypandoc
-from pathlib import Path
-from util.readme_unmark import unmark
 import os
+from pathlib import Path
+from tempfile import NamedTemporaryFile
+
+import pypandoc
 from loguru import logger
+from models.file import File
+from modules.knowladge.basic import basic_file_parser, pdf_parser
+from util.readme_unmark import unmark
 
 
 def parse_txt(file: File):

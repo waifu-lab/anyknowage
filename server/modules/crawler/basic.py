@@ -1,6 +1,6 @@
-from models.basic_crawer import BasicCrawer
-from DrissionPage import ChromiumPage, ChromiumOptions
 import requests
+from DrissionPage import ChromiumOptions, ChromiumPage
+from models.basic_crawer import BasicCrawer
 
 
 class Crawer(BasicCrawer):

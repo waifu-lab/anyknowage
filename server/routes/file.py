@@ -1,10 +1,11 @@
-from fastapi import APIRouter, UploadFile
-from db import get_mongodb
 import json
-from bson import json_util
-from worker import ADD_knowledge
-from models.tempfile import Temp_File
+
 from attrs import asdict
+from bson import json_util
+from db import get_mongodb
+from fastapi import APIRouter, UploadFile
+from models.tempfile import Temp_File
+from worker import ADD_knowledge
 
 file_router = APIRouter()
 

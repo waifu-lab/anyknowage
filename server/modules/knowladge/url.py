@@ -1,8 +1,9 @@
-from modules.knowladge.basic import basic_file_parser
+import re
+
+from loguru import logger
 from models.file import File
 from modules.crawler import Crawer, Github, Gitlab, twitter
-import re
-from loguru import logger
+from modules.knowladge.basic import basic_file_parser
 
 special_urls = {
     "github.com": Github,

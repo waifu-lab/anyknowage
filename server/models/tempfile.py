@@ -1,6 +1,6 @@
 from attrs import define
-from fastapi import UploadFile
 from db import get_mongodb
+from fastapi import UploadFile
 
 
 @define
