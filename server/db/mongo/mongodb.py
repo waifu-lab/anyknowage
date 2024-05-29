@@ -40,7 +40,7 @@ class Mongodb:
         fsid = fs.put(file)
         db.files.insert_one(
             {
-                "file_id": bson.Binary.from_uuid(file_id),
+                "file_id": str(file_id),
                 "sha1": sha1,
                 "fsid": fsid,
                 "name": name,
@@ -52,10 +52,10 @@ class Mongodb:
 
     def delete_file(self, file_id: UUID) -> None:
         db = self.client.anyknowledge
-        file = db.files.find_one({"file_id": bson.Binary.from_uuid(file_id)})
+        file = db.files.find_one({"file_id": str(file_id)})
         fs = gridfs.GridFS(db)
         fs.delete(file.get("fsid"))
-        db.files.delete_one({"file_id": bson.Binary.from_uuid(file_id)})
+        db.files.delete_one({"file_id": str(file_id)})
 
     def list_files(self) -> dict:
         db = self.client.anyknowledge
@@ -64,12 +64,12 @@ class Mongodb:
 
     def get_file_from_id(self, file_id: UUID) -> dict:
         db = self.client.anyknowledge
-        file = db.files.find_one({"file_id": bson.Binary.from_uuid(file_id)})
+        file = db.files.find_one({"file_id": str(file_id)})
         return file
 
     def download_file(self, file_id: UUID) -> bytes:
         db = self.client.anyknowledge
-        file = db.files.find_one({"file_id": bson.Binary.from_uuid(file_id)})
+        file = db.files.find_one({"file_id": str(file_id)})
         fs = gridfs.GridFS(db)
         file = fs.get(file.get("fsid"))
         return file.read()

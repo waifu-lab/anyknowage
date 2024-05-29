@@ -36,16 +36,14 @@ async def get_file(pos: int):
 @file_router.get("/file")
 async def download_file(file_id: str) -> bytes:
     filedata = get_mongodb().get_file_from_id(file_id)
-    file = get_mongodb().download_file(filedata["fsid"])
-    header = {
-        "Content-Disposition": f'attachment; filename={filedata["name"]+"."+filedata["ext"]}'
-    }
+    file = get_mongodb().download_file(file_id)
+    header = {"Content-Disposition": f'attachment; filename={filedata["name"]}'}
     return Response(file, headers=header)
 
 
 @file_router.delete("/file")
 async def delete_file(file_id: str):
     filedata = get_mongodb().get_file_from_id(file_id)
-    get_vectory().delete_documents(filedata["vector"])
+    get_vectory().delete_documents(filedata["vectoe_ids"])
     get_mongodb().delete_file(file_id)
     return {"file_id": file_id}
