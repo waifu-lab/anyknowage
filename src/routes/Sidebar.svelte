@@ -4,6 +4,7 @@
 	import Settings from 'lucide-svelte/icons/settings'
 	import Archive from 'lucide-svelte/icons/Archive'
 	import MessageCircleMore from 'lucide-svelte/icons/message-circle-more'
+	import FileUp from 'lucide-svelte/icons/file-up'
 
 	import { Button } from '$lib/components/ui/button/index.js'
 	import { toggleMode } from 'mode-watcher'
@@ -25,6 +26,20 @@
 					variant="ghost"
 					size="icon"
 					class="rounded-lg bg-muted"
+					aria-label="Talk"
+					builders={[builder]}
+				>
+					<FileUp class="size-5" />
+				</Button>
+			</Tooltip.Trigger>
+			<Tooltip.Content side="right" sideOffset={5}>Upload</Tooltip.Content>
+		</Tooltip.Root>
+		<Tooltip.Root>
+			<Tooltip.Trigger asChild let:builder>
+				<Button
+					variant="ghost"
+					size="icon"
+					class="rounded-lg"
 					aria-label="Talk"
 					builders={[builder]}
 				>

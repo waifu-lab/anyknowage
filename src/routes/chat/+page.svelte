@@ -19,46 +19,11 @@
 		</header>
 		<main class="grid flex-1 gap-4 overflow-auto p-4">
 			<div class="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4">
-				<Badge variant="outline" class="absolute right-8 top-3">Upload</Badge>
+				<Badge variant="outline" class="absolute right-8 top-3">Chat</Badge>
 				<div class="relative flex-1">
 					<div
 						class="scrollbar-none absolute bottom-0 left-0 right-0 top-0 overflow-y-auto overflow-x-hidden"
 					>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
 						<Talkbox
 							name="Anyknowledge"
 							messages={['testmsg1', 'testmsg2', '6 wow']}
@@ -84,7 +49,7 @@
 						</div>
 						<Textarea
 							id="message"
-							placeholder="Add to knowledge"
+							placeholder="Type your message here..."
 							class="min-h-4 resize-none border-0 p-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
 						/>
 						<Button type="submit" size="sm" class="sticky top-0 ml-auto mt-2 gap-1.5">

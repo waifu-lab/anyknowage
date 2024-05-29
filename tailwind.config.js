@@ -58,7 +58,8 @@ const config = {
 				sans: [...fontFamily.sans]
 			}
 		}
-	}
+	},
+	plugins: [require('tailwind-scrollbar')]
 }
 
 export default config
