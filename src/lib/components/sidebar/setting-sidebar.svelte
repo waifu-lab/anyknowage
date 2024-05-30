@@ -31,8 +31,8 @@
 			{#if isActive}
 				<div
 					class="absolute inset-0 rounded-md bg-muted"
-					in:send={{ key: 'active-sidebar-tab' }}
-					out:receive={{ key: 'active-sidebar-tab' }}
+					in:send={{ key: 'active-sidebar-tab-setting' }}
+					out:receive={{ key: 'active-sidebar-tab-setting' }}
 				/>
 			{/if}
 			<div class="relative">

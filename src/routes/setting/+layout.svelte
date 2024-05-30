@@ -33,7 +33,7 @@
 			<SidebarNav items={sidebarNavItems} />
 		</aside>
 		<div class="flex-1 lg:max-w-2xl">
-			<slot />
+			<slot></slot>
 		</div>
 	</div>
 </div>
