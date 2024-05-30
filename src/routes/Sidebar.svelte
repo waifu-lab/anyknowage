@@ -95,6 +95,7 @@
 		<Tooltip.Root>
 			<Tooltip.Trigger asChild let:builder>
 				<Button
+					href="/setting"
 					variant="ghost"
 					size="icon"
 					class="mt-auto rounded-lg"
