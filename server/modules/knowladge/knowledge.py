@@ -8,8 +8,7 @@ from models.file import File
 from modules.knowladge.audio import audio_file_parser
 from modules.knowladge.image import image_file_parser
 from modules.knowladge.strtext import parse_str
-from modules.knowladge.textfiles import (parse_docx, parse_markdown, parse_pdf,
-                                         parse_txt)
+from modules.knowladge.textfiles import parse_docx, parse_markdown, parse_pdf, parse_txt
 from modules.knowladge.url import parse_url
 from modules.knowladge.video import video_file_parser
 
@@ -85,15 +84,16 @@ def add_knowledge(data: dict | str):
         file.file = tmp
 
     get_mongodb().add_file(
-        file.uuid,
-        file.file,
-        file.hash,
-        file.name,
-        file.file_ext,
-        embedding["documents"],
+        file_id=file.uuid,
+        file=file.file,
+        sha1=file.hash,
+        name=file.name,
+        ext=file.file_ext,
+        vector=embedding["documents"],
+        context=file.context if file.istext else None,
     )
     if not file.istext:
         get_mongodb().delete_tempfile(data["file_id"])
     get_vectory().write_documents(
-        embedding["documents"], policy=DuplicatePolicy.OVERWRITE
+        documents=embedding["documents"], policy=DuplicatePolicy.OVERWRITE
     )

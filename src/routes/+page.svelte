@@ -8,6 +8,9 @@
 	import { Textarea } from '$lib/components/ui/textarea/index.js'
 	import { Label } from '$lib/components/ui/label/index.js'
 	import Talkbox from '$lib/components/talkbox/talkbox.svelte'
+	export let data
+	const { posts } = data
+	console.log(posts)
 </script>
 
 <div class="grid h-screen w-full">
@@ -22,48 +25,26 @@
 				<Badge variant="outline" class="absolute right-8 top-3">Upload</Badge>
 				<div class="relative flex-1">
 					<div
-						class="scrollbar-none absolute bottom-0 left-0 right-0 top-0 overflow-y-auto overflow-x-hidden"
+						class="absolute bottom-0 left-0 right-0 top-0 overflow-y-auto overflow-x-hidden scrollbar-none"
 					>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
-						<Talkbox
-							name="Anyknowledge"
-							messages={['testmsg1', 'testmsg2', '6 wow']}
-							avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
-						/>
+						{#await posts then value}
+							{#if value.length === 0}
+								<p class="text-center">Nothing in knowledge</p>
+							{:else}
+								{#each value as post}
+									<Talkbox
+										name="User"
+										context={post.context}
+										ext={post.ext}
+										filename={post.name}
+										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
+										timestamp={post.time.$date}
+									/>
+								{/each}
+							{/if}
+						{:catch error}
+							<p class="text-center">{error.message}</p>
+						{/await}
 					</div>
 				</div>
 				<form

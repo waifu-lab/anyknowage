@@ -18,6 +18,7 @@ class File:
     loader: Optional[callable] = None
     uuid = uuid4()
     istext: bool = False
+    context: str = None
 
     def __init__(self, name: str, file: bytes | str, ext: str = ".txt") -> None:
         self.istext = False
@@ -25,6 +26,7 @@ class File:
         self.file = file
         self.size = len(file)
         self.file_ext = ext
+        self.context = file
 
     def is_null(self) -> bool:
         return self.size == 0

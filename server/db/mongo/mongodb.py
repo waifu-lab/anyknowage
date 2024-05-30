@@ -4,6 +4,7 @@ from uuid import UUID, uuid4
 import bson
 import gridfs
 import pymongo
+import pytz
 from haystack.dataclasses import Document
 
 
@@ -34,6 +35,7 @@ class Mongodb:
         name: str,
         ext: str,
         vector: list[Document],
+        context: str = None,
     ) -> None:
         db = self.client.anyknowledge
         fs = gridfs.GridFS(db)
@@ -46,7 +48,8 @@ class Mongodb:
                 "name": name,
                 "ext": ext,
                 "vectoe_ids": [vector_id.id for vector_id in vector],
-                "time": datetime.now(),
+                "time": datetime.now(pytz.utc),
+                "context": context,
             }
         )
 

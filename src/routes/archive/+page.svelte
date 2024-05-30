@@ -46,7 +46,7 @@
 									<Table.Cell>
 										<Badge variant="outline">Draft</Badge>
 									</Table.Cell>
-									<Table.Cell>
+									<Table.Cell class="hidden md:table-cell">
 										<Badge variant="outline">Draft</Badge>
 									</Table.Cell>
 									<Table.Cell class="hidden md:table-cell">

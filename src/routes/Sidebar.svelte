@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Triangle from 'lucide-svelte/icons/triangle'
+	import Box from 'lucide-svelte/icons/box'
 
 	import Settings from 'lucide-svelte/icons/settings'
 
@@ -37,7 +37,7 @@
 <aside class="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
 	<div class="border-b p-2">
 		<Button variant="outline" size="icon" aria-label="Home">
-			<Triangle class="size-5 fill-foreground" />
+			<Box class="size-5 fill-foreground" />
 		</Button>
 	</div>
 	<MainSidebar items={sidebarNavItems} />
