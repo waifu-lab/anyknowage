@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SidebarNav from '$lib/components/setting-sidebar/sidebar.svelte'
+	import SidebarNav from '$lib/components/sidebar/setting-sidebar.svelte'
 	import { Separator } from '$lib/components/ui/separator'
 
 	const sidebarNavItems = [

@@ -1,16 +1,37 @@
 <script lang="ts">
 	import Triangle from 'lucide-svelte/icons/triangle'
-	import SquareTerminal from 'lucide-svelte/icons/square-terminal'
+
 	import Settings from 'lucide-svelte/icons/settings'
-	import Archive from 'lucide-svelte/icons/Archive'
-	import MessageCircleMore from 'lucide-svelte/icons/message-circle-more'
-	import FileUp from 'lucide-svelte/icons/file-up'
 
 	import { Button } from '$lib/components/ui/button/index.js'
 	import { toggleMode } from 'mode-watcher'
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js'
 	import Sun from 'lucide-svelte/icons/sun'
 	import Moon from 'lucide-svelte/icons/moon'
+	import MainSidebar from '$lib/components/sidebar/main-sidebar.svelte'
+
+	const sidebarNavItems = [
+		{
+			svg: 'FileUp',
+			href: '/',
+			Tooltip: 'Upload'
+		},
+		{
+			svg: 'MessageCircleMore',
+			href: '/chat',
+			Tooltip: 'Chat'
+		},
+		{
+			svg: 'Archive',
+			href: '/archive',
+			Tooltip: 'Archive'
+		},
+		{
+			svg: 'SquareTerminal',
+			href: '/api',
+			Tooltip: 'API'
+		}
+	]
 </script>
 
 <aside class="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
@@ -19,64 +40,7 @@
 			<Triangle class="size-5 fill-foreground" />
 		</Button>
 	</div>
-	<nav class="grid gap-1 p-2">
-		<Tooltip.Root>
-			<Tooltip.Trigger asChild let:builder>
-				<Button
-					variant="ghost"
-					size="icon"
-					class="rounded-lg bg-muted"
-					aria-label="Talk"
-					builders={[builder]}
-				>
-					<FileUp class="size-5" />
-				</Button>
-			</Tooltip.Trigger>
-			<Tooltip.Content side="right" sideOffset={5}>Upload</Tooltip.Content>
-		</Tooltip.Root>
-		<Tooltip.Root>
-			<Tooltip.Trigger asChild let:builder>
-				<Button
-					variant="ghost"
-					size="icon"
-					class="rounded-lg"
-					aria-label="Talk"
-					builders={[builder]}
-				>
-					<MessageCircleMore class="size-5" />
-				</Button>
-			</Tooltip.Trigger>
-			<Tooltip.Content side="right" sideOffset={5}>Talk</Tooltip.Content>
-		</Tooltip.Root>
-		<Tooltip.Root>
-			<Tooltip.Trigger asChild let:builder>
-				<Button
-					variant="ghost"
-					size="icon"
-					class="rounded-lg"
-					aria-label="Archive"
-					builders={[builder]}
-				>
-					<Archive class="size-5" />
-				</Button>
-			</Tooltip.Trigger>
-			<Tooltip.Content side="right" sideOffset={5}>Archive</Tooltip.Content>
-		</Tooltip.Root>
-		<Tooltip.Root>
-			<Tooltip.Trigger asChild let:builder>
-				<Button
-					variant="ghost"
-					size="icon"
-					class="rounded-lg"
-					aria-label="API"
-					builders={[builder]}
-				>
-					<SquareTerminal class="size-5" />
-				</Button>
-			</Tooltip.Trigger>
-			<Tooltip.Content side="right" sideOffset={5}>API</Tooltip.Content>
-		</Tooltip.Root>
-	</nav>
+	<MainSidebar items={sidebarNavItems} />
 	<nav class="mt-auto grid gap-1 p-2">
 		<Tooltip.Root>
 			<Tooltip.Trigger asChild let:builder>
