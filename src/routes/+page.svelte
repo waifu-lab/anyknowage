@@ -51,7 +51,7 @@
 					class="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
 				>
 					<Label for="message" class="sr-only">Message</Label>
-					<div class="flex max-h-32 items-start overflow-y-auto p-3 pt-0">
+					<div class="flex max-h-32 items-start overflow-y-auto p-3 pt-0 scrollbar-thin">
 						<div class="sticky top-0">
 							<Tooltip.Root>
 								<Tooltip.Trigger asChild let:builder>
@@ -66,9 +66,13 @@
 						<Textarea
 							id="message"
 							placeholder="Add to knowledge"
-							class="min-h-4 resize-none border-0 p-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+							class="h-[20px] min-h-4 resize-none border-0 p-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
 						/>
-						<Button type="submit" size="sm" class="sticky top-0 ml-auto mt-2 gap-1.5">
+						<Button
+							type="submit"
+							size="sm"
+							class="sticky top-[0.5rem] ml-auto  gap-1.5"
+						>
 							Send Message
 							<CornerDownLeft class="size-3.5" />
 						</Button>
