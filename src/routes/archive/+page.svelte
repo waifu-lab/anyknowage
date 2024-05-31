@@ -64,7 +64,7 @@
 													variant="ghost"
 													builders={[builder]}
 												>
-													<Ellipsis class="h-4 w-4" />
+													<Ellipsis class="size-6" />
 													<span class="sr-only">Toggle menu</span>
 												</Button>
 											</DropdownMenu.Trigger>

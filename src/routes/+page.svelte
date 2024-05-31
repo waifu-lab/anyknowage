@@ -27,7 +27,9 @@
 					<div
 						class="absolute bottom-0 left-0 right-0 top-0 overflow-y-auto overflow-x-hidden scrollbar-none"
 					>
-						{#await posts then value}
+						{#await posts}
+							<p class="text-center">Loading...</p>
+						{:then value}
 							{#if value.length === 0}
 								<p class="text-center">Nothing in knowledge</p>
 							{:else}
@@ -51,7 +53,7 @@
 					class="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
 				>
 					<Label for="message" class="sr-only">Message</Label>
-					<div class="flex max-h-32 items-start overflow-y-auto p-3 pt-0 scrollbar-thin">
+					<div class="flex max-h-32 items-start overflow-y-auto px-3 pt-0 scrollbar-thin">
 						<div class="sticky top-0">
 							<Tooltip.Root>
 								<Tooltip.Trigger asChild let:builder>
@@ -71,9 +73,8 @@
 						<Button
 							type="submit"
 							size="sm"
-							class="sticky top-[0.5rem] ml-auto  gap-1.5"
+							class="sticky top-[0.3rem] ml-auto  gap-1.5"
 						>
-							Send Message
 							<CornerDownLeft class="size-3.5" />
 						</Button>
 					</div>
