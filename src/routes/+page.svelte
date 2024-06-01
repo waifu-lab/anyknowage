@@ -9,7 +9,13 @@
 	import { Label } from '$lib/components/ui/label/index.js'
 	import Talkbox from '$lib/components/talkbox/talkbox.svelte'
 	export let data
-	const { posts } = data
+	const { posts, posttext } = data
+	let input = ''
+	let fileInput: HTMLInputElement
+
+	function handleButtonClick() {
+		fileInput.click()
+	}
 	console.log(posts)
 </script>
 
@@ -57,7 +63,17 @@
 						<div class="sticky top-0">
 							<Tooltip.Root>
 								<Tooltip.Trigger asChild let:builder>
-									<Button variant="ghost" size="icon" builders={[builder]}>
+									<input
+										type="file"
+										bind:this={fileInput}
+										style="display: none;"
+									/>
+									<Button
+										variant="ghost"
+										size="icon"
+										builders={[builder]}
+										on:click={handleButtonClick}
+									>
 										<Paperclip class="size-4" />
 										<span class="sr-only">Attach file</span>
 									</Button>
@@ -69,11 +85,22 @@
 							id="message"
 							placeholder="Add to knowledge"
 							class="h-[20px] min-h-4 resize-none border-0 p-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+							bind:value={input}
+							on:keydown={(e) => {
+								if (e.key === 'Enter' && !e.shiftKey) {
+									e.preventDefault()
+									posttext(input)
+									input = ''
+								}
+							}}
 						/>
 						<Button
 							type="submit"
 							size="sm"
 							class="sticky top-[0.3rem] ml-auto  gap-1.5"
+							on:click={() => {
+								posttext(input)
+							}}
 						>
 							<CornerDownLeft class="size-3.5" />
 						</Button>

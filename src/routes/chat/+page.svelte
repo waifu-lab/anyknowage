@@ -1,16 +1,49 @@
 <script lang="ts">
-	import Paperclip from 'lucide-svelte/icons/paperclip'
 	import CornerDownLeft from 'lucide-svelte/icons/corner-down-left'
-
 	import { Badge } from '$lib/components/ui/badge/index.js'
 	import { Button } from '$lib/components/ui/button/index.js'
-	import * as Tooltip from '$lib/components/ui/tooltip/index.js'
 	import { Textarea } from '$lib/components/ui/textarea/index.js'
 	import { Label } from '$lib/components/ui/label/index.js'
 	import Talkbox from '$lib/components/talkbox/talkbox.svelte'
-
+	import { tick } from 'svelte'
+	let chatstr = ''
 	export let data
-	const { chats } = data
+
+	let chatTrigger = 0
+	let istinking = false
+	let chatArea: HTMLElement
+
+	let chats = []
+	let chatPromise = data.chats(chatTrigger)
+
+	$: if (chatPromise) {
+		chatPromise.then((value) => {
+			chats = value
+			scrollToBottom(chatArea, true)
+		})
+	}
+
+	const scrollToBottom = async (node: HTMLElement, smooth = false) => {
+		if (!node) return
+		await tick()
+		if (smooth) {
+			node.scrollTop = node.scrollHeight
+		} else {
+			node.scroll({ top: node.scrollHeight, behavior: 'smooth' })
+		}
+	}
+
+	async function chat(message: string) {
+		if (!message.trim()) return
+		istinking = true
+		scrollToBottom(chatArea)
+		await data.chat(message)
+		chatTrigger += 1
+		chatPromise = data.chats(chatTrigger)
+		chatPromise.then(() => {
+			istinking = false
+		})
+	}
 </script>
 
 <div class="grid h-screen w-full">
@@ -26,52 +59,64 @@
 				<div class="relative flex-1">
 					<div
 						class="absolute bottom-0 left-0 right-0 top-0 overflow-y-auto overflow-x-hidden scrollbar-none"
+						bind:this={chatArea}
 					>
-						{#await chats}
+						{#await chatPromise}
 							<p class="text-center">Loading...</p>
 						{:then value}
-							{#if value.length === 0}
-								<p class="text-center">Nothing in knowledge</p>
+							{#if value.length === 0 && !istinking}
+								<p class="text-center">you haven't chat yet</p>
 							{:else}
-								{#each value as chat}
+								{#each value.reverse() as chat}
 									<Talkbox
 										name="User"
-										messages={chat.messages}
+										messages={[chat.ask]}
+										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
+									/>
+									<Talkbox
+										name="Bot"
+										messages={[chat.answer.answer]}
 										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
 									/>
 								{/each}
+								{#if istinking}
+									<Talkbox
+										name="Bot"
+										messages={['Thinking...']}
+										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
+									/>
+								{/if}
 							{/if}
 						{:catch error}
 							<p class="text-center">{error.message}</p>
 						{/await}
+						<div class="h-6"></div>
 					</div>
 				</div>
 				<form
 					class="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
+					on:submit={(e) => {
+						e.preventDefault()
+						chat(chatstr)
+						chatstr = ''
+					}}
 				>
 					<Label for="message" class="sr-only">Message</Label>
 					<div class="flex max-h-32 items-start overflow-y-auto px-3 pt-0 scrollbar-thin">
-						<div class="sticky top-0">
-							<Tooltip.Root>
-								<Tooltip.Trigger asChild let:builder>
-									<Button variant="ghost" size="icon" builders={[builder]}>
-										<Paperclip class="size-4" />
-										<span class="sr-only">Attach file</span>
-									</Button>
-								</Tooltip.Trigger>
-								<Tooltip.Content side="top">Attach File</Tooltip.Content>
-							</Tooltip.Root>
-						</div>
 						<Textarea
 							id="message"
 							placeholder="Type your message here..."
 							class="h-[20px] min-h-4 resize-none border-0 p-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+							bind:value={chatstr}
+							on:keydown={(e) => {
+								if (e.key === 'Enter' && !e.shiftKey) {
+									e.preventDefault()
+									chat(chatstr)
+									chatstr = ''
+								}
+							}}
 						/>
-						<Button
-							type="submit"
-							size="sm"
-							class="sticky top-[0.3rem] ml-auto  gap-1.5"
-						>
+						<Button type="submit" size="sm" class="sticky top-[0.3rem] ml-auto gap-1.5">
 							<CornerDownLeft class="size-3.5" />
 						</Button>
 					</div>

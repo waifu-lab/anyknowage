@@ -109,14 +109,14 @@ class Mongodb:
 
     def get_chat_history(self, pos: int = 0) -> dict:
         db = self.client.anyknowledge
-        chats = db.chats.find().skip(pos).limit(20)
-        return chats
+        chats = db.chats.find().sort({"_id": -1}).skip(pos).limit(20)
+        return [{**chat, "_id": str(chat["_id"])} for chat in chats]
 
-    def add_chat(self, ask: str, answer: str) -> None:
+    def add_chat(self, ask: str, answer: dict) -> None:
         db = self.client.anyknowledge
         db.chats.insert_one(
             {
-                "chat_id": str(uuid4).split("-")[0],
+                "chat_id": str(uuid4()).split("-")[0],
                 "ask": ask,
                 "answer": answer,
                 "time": datetime.now(),

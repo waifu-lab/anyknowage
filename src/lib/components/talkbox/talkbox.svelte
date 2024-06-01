@@ -17,7 +17,7 @@
 			<span class="talkbox_timestamp">{new Date(timestamp).toLocaleTimeString()}</span>
 		</div>
 		<div class="talkbox_body">
-			{#if ext != undefined}
+			{#if ext != '.txt' && ext != undefined}
 				<div class=" flex items-center space-x-4 rounded-md border p-4">
 					<FileText />
 					<div class="flex-1 space-y-1">
@@ -26,7 +26,7 @@
 				</div>
 			{/if}
 			{#if context != undefined}
-				<p>{context}</p>
+				<p>{@html context.replace(/\n/g, '<br>')}</p>
 			{/if}
 			{#each messages as message}
 				<div class="talkbox_message">{message}</div>

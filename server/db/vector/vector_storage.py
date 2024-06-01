@@ -9,6 +9,6 @@ class Qdrant:
             "localhost",
             index="Document",
             embedding_dim=1024,
-            recreate_index=True,
+            # recreate_index=True,
             hnsw_config={"m": 16, "ef_construct": 64},
         )

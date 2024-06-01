@@ -2,14 +2,33 @@ from db import get_mongodb
 from fastapi import APIRouter
 from models.ai_models import GPT_Request
 from modules.chat.gpt import GPT
+from haystack.dataclasses import ExtractedAnswer
+import json
 
 chat_router = APIRouter()
 
 
 @chat_router.post("/chat")
 async def new_chat(request: GPT_Request):
-    rt = GPT(request.model).ASK(request.question)
-    get_mongodb().add_chat(request.question, rt)
+    rt: ExtractedAnswer = GPT(request.model).ASK(request.question)
+    docs = []
+    for answer in rt["reader"]["answers"]:
+        docs.append(
+            {
+                "answer": answer.query,
+                "data": answer.data,
+                "context": answer.document.content if answer.document else None,
+                "doc_id": answer.document.id if answer.document else None,
+            }
+        )
+    answer = rt["generator"]["replies"][0]
+    get_mongodb().add_chat(
+        request.question,
+        {
+            "answer": answer,
+            "docs": docs,
+        },
+    )
     return rt
 
 
