@@ -77,6 +77,7 @@
 		dropfiles = event.payload as Array<string>
 	})
 	listen('tauri://file-drop-hover', (event) => {
+		if ((event.payload as string[]).length === 0) return
 		fileDropped = true
 	})
 	listen('tauri://file-drop-cancelled', (event) => {

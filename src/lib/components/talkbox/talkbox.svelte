@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { FileText } from 'lucide-svelte'
+	import Loading from '$lib/components/loadingcircle.svelte'
 	export let avatar: string | undefined = undefined
 	export let name: string = 'user'
 	export let messages: string[] = []
@@ -7,6 +8,7 @@
 	export let context: string | undefined = undefined
 	export let ext: string | undefined = undefined
 	export let filename: string | undefined = undefined
+	export let isloading: boolean = false
 </script>
 
 <div class="talkbox">
@@ -28,9 +30,16 @@
 			{#if context != undefined}
 				<p>{@html context.replace(/\n/g, '<br>')}</p>
 			{/if}
-			{#each messages as message}
-				<div class="talkbox_message">{message}</div>
-			{/each}
+			<div class="flex items-center">
+				{#if isloading}
+					<div class="mr-4">
+						<Loading />
+					</div>
+				{/if}
+				{#each messages as message}
+					<div class="talkbox_message">{message}</div>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>

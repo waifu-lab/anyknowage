@@ -84,6 +84,7 @@
 										name="Bot"
 										messages={['Thinking...']}
 										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
+										isloading={true}
 									/>
 								{/if}
 							{/if}
