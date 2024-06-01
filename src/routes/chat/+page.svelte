@@ -19,7 +19,7 @@
 	$: if (chatPromise) {
 		chatPromise.then((value) => {
 			chats = value
-			scrollToBottom(chatArea, true)
+			scrollToBottom(chatArea)
 		})
 	}
 
@@ -27,16 +27,16 @@
 		if (!node) return
 		await tick()
 		if (smooth) {
-			node.scrollTop = node.scrollHeight
-		} else {
 			node.scroll({ top: node.scrollHeight, behavior: 'smooth' })
+		} else {
+			node.scrollTop = node.scrollHeight
 		}
 	}
 
 	async function chat(message: string) {
 		if (!message.trim()) return
 		istinking = true
-		scrollToBottom(chatArea)
+		scrollToBottom(chatArea, true)
 		await data.chat(message)
 		chatTrigger += 1
 		chatPromise = data.chats(chatTrigger)

@@ -4,7 +4,6 @@ import axios from 'axios'
 export const load = (async () => {
 	const getchats = async (pos: number) => {
 		try {
-			console.log(pos)
 			const data = await axios.get('http://localhost:8000/chats')
 			return data.data
 		} catch (e) {

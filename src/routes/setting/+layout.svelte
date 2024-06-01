@@ -25,7 +25,7 @@
 <div class="block w-full space-y-6 p-10">
 	<div class="space-y-0.5">
 		<h2 class="text-2xl font-bold tracking-tight">Settings</h2>
-		<p class="text-muted-foreground">Manage Anyknowledge settings</p>
+		<p class="text-muted-foreground">Anyknowledge settings</p>
 	</div>
 	<Separator class="my-6" />
 	<div class="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">

@@ -18,6 +18,12 @@
                 "scope": [
                     "https://localhost/*"
                 ]
+            },
+            "fs": {
+                "all": true
+            },
+            "dialog": {
+                "all": true
             }
         },
         "bundle": {

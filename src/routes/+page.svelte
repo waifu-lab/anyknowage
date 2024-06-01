@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Paperclip from 'lucide-svelte/icons/paperclip'
-	import CornerDownLeft from 'lucide-svelte/icons/corner-down-left'
+	import { FolderUp, CornerDownLeft, X } from 'lucide-svelte'
 
 	import { Badge } from '$lib/components/ui/badge/index.js'
 	import { Button } from '$lib/components/ui/button/index.js'
@@ -8,16 +8,133 @@
 	import { Textarea } from '$lib/components/ui/textarea/index.js'
 	import { Label } from '$lib/components/ui/label/index.js'
 	import Talkbox from '$lib/components/talkbox/talkbox.svelte'
+	import { tick } from 'svelte'
+	import { listen } from '@tauri-apps/api/event'
+	import { open } from '@tauri-apps/api/dialog'
+	import { readBinaryFile } from '@tauri-apps/api/fs'
+	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js'
+
 	export let data
-	const { posts, posttext } = data
+	const { posttext, addfile } = data
+	let chatTrigger = 0
 	let input = ''
 	let fileInput: HTMLInputElement
+	let chatArea: HTMLElement
+	let posts = []
+	let file: FileList
+	let alertfile = false
+	let dropfiles: string[]
+	dropfiles = ['test1', 'test2']
 
-	function handleButtonClick() {
-		fileInput.click()
+	const readTextFile = async () => {
+		const openfile = await open({
+			multiple: false,
+			directory: false
+		})
+		console.log(openfile)
+		if (!openfile) return
+		const readfile = await readBinaryFile(openfile as string)
+		let filename = typeof openfile === 'string' ? openfile.split('/') : ''
+		if (filename.length === 1) {
+			filename = typeof openfile === 'string' ? openfile.split('\\') : ''
+		}
+		addfile(readfile, filename.slice(-1) as string)
 	}
-	console.log(posts)
+
+	let chatPromise = data.posts(chatTrigger)
+
+	$: if (chatPromise) {
+		chatPromise.then((value) => {
+			posts = value
+			scrollToBottom(chatArea)
+		})
+	}
+	$: dropfiles
+
+	const scrollToBottom = async (node: HTMLElement, smooth = false) => {
+		if (!node) return
+		await tick()
+		if (smooth) {
+			node.scroll({ top: node.scrollHeight, behavior: 'smooth' })
+		} else {
+			node.scrollTop = node.scrollHeight
+		}
+	}
+
+	const postdropfile = () => {
+		dropfiles.forEach(async (element) => {
+			const readfile = await readBinaryFile(element)
+			addfile(readfile, element)
+		})
+	}
+
+	let fileDropped = false
+	listen('tauri://file-drop', async (event) => {
+		console.log(event)
+		fileDropped = false
+		if (!event.payload) return
+		alertfile = true
+		dropfiles = event.payload as Array<string>
+	})
+	listen('tauri://file-drop-hover', (event) => {
+		fileDropped = true
+	})
+	listen('tauri://file-drop-cancelled', (event) => {
+		fileDropped = false
+	})
 </script>
+
+{#if fileDropped}
+	<div
+		class="fixed left-1/2 top-1/2 z-50 w-[400px] -translate-x-1/2 -translate-y-1/2 transform rounded-lg border-2 bg-primary bg-opacity-90 p-6"
+		id="dropzone"
+	>
+		<div class="text-center text-background">
+			<FolderUp class="mx-auto h-20 w-20" />
+			<h3 class="font-mediu mt-2 text-sm">
+				<div class="relative cursor-pointer">
+					<span>Drag and drop to upload</span>
+				</div>
+			</h3>
+		</div>
+	</div>
+{/if}
+
+<AlertDialog.Root bind:open={alertfile}>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Files</AlertDialog.Title>
+			{#if dropfiles}
+				{#each dropfiles as file, i (file)}
+					<div class="flex items-center gap-2">
+						<AlertDialog.Description>{file}</AlertDialog.Description>
+						<Button
+							variant="outline"
+							size="icon"
+							on:click={() => {
+								dropfiles.splice(i, 1)
+								dropfiles = dropfiles.slice()
+								if (dropfiles.length === 0) {
+									alertfile = false
+								}
+							}}
+						>
+							<X class="h-4 w-4" />
+						</Button>
+					</div>
+				{/each}
+			{/if}
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+			<AlertDialog.Action
+				on:click={() => {
+					postdropfile()
+				}}>Upload</AlertDialog.Action
+			>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>
 
 <div class="grid h-screen w-full">
 	<div class="flex flex-col">
@@ -32,8 +149,9 @@
 				<div class="relative flex-1">
 					<div
 						class="absolute bottom-0 left-0 right-0 top-0 overflow-y-auto overflow-x-hidden scrollbar-none"
+						bind:this={chatArea}
 					>
-						{#await posts}
+						{#await chatPromise}
 							<p class="text-center">Loading...</p>
 						{:then value}
 							{#if value.length === 0}
@@ -49,6 +167,7 @@
 										timestamp={post.time.$date}
 									/>
 								{/each}
+								<div class="h-6"></div>
 							{/if}
 						{:catch error}
 							<p class="text-center">{error.message}</p>
@@ -66,13 +185,14 @@
 									<input
 										type="file"
 										bind:this={fileInput}
+										bind:files={file}
 										style="display: none;"
 									/>
 									<Button
 										variant="ghost"
 										size="icon"
 										builders={[builder]}
-										on:click={handleButtonClick}
+										on:click={readTextFile}
 									>
 										<Paperclip class="size-4" />
 										<span class="sr-only">Attach file</span>
