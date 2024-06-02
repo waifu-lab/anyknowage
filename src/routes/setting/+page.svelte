@@ -13,18 +13,13 @@
 	import { Input } from '$lib/components/ui/input'
 	import { Separator } from '$lib/components/ui/separator'
 	import * as Form from '$lib/components/ui/form'
-	import { superForm, defaults } from 'sveltekit-superforms'
+	import { superForm } from 'sveltekit-superforms'
 	import { zodClient } from 'sveltekit-superforms/adapters'
-	import SuperDebug from 'sveltekit-superforms'
-
-	const initialData = {
-		username: 'user',
-		avatar: 'https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024'
-	}
-
-	const form = superForm(defaults(initialData, zodClient(formSchema)), {
+	let defauledata = JSON.parse(localStorage.getItem('default') as string)
+	const form = superForm(defauledata, {
 		SPA: true,
 		validators: zodClient(formSchema),
+		resetForm: false,
 		onSubmit() {
 			localStorage.setItem('default', JSON.stringify($formData))
 		}
@@ -38,7 +33,7 @@
 </div>
 <Separator class="my-5" />
 
-<form method="POST" use:enhance>
+<form use:enhance>
 	<Form.Field {form} name="username">
 		<Form.Control let:attrs>
 			<Form.Label>Username</Form.Label>
@@ -57,4 +52,3 @@
 	</Form.Field>
 	<Form.Button>Submit</Form.Button>
 </form>
-<SuperDebug data={$formData} />
