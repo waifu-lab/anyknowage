@@ -3,10 +3,21 @@
 	import './styles.css'
 	import Sidebar from './Sidebar.svelte'
 	import { ModeWatcher } from 'mode-watcher'
+	import { onMount } from 'svelte'
+	onMount(() => {
+		if (localStorage.getItem('default') === null) {
+			localStorage.setItem(
+				'default',
+				JSON.stringify({
+					username: 'user',
+					avatar: 'https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024'
+				})
+			)
+		}
+	})
 </script>
 
 <div class="app">
-	<!-- <Header></Header> -->
 	<ModeWatcher />
 	<Sidebar />
 	<main class="pl-[53px]">

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Paperclip from 'lucide-svelte/icons/paperclip'
 	import { FolderUp, CornerDownLeft, X } from 'lucide-svelte'
-
 	import { Badge } from '$lib/components/ui/badge/index.js'
 	import { Button } from '$lib/components/ui/button/index.js'
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js'
@@ -24,7 +23,7 @@
 	let file: FileList
 	let alertfile = false
 	let dropfiles: string[]
-	dropfiles = ['test1', 'test2']
+	let defauledata = JSON.parse(localStorage.getItem('default') as string)
 
 	const readTextFile = async () => {
 		const openfile = await open({
@@ -160,11 +159,11 @@
 							{:else}
 								{#each value as post}
 									<Talkbox
-										name="User"
+										name={defauledata.username}
 										context={post.context}
 										ext={post.ext}
 										filename={post.name}
-										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
+										avatar={defauledata.avatar}
 										timestamp={post.time.$date}
 									/>
 								{/each}

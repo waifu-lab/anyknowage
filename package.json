@@ -48,12 +48,15 @@
         "axios-tauri-api-adapter": "^0.2.1",
         "bits-ui": "^0.21.6",
         "clsx": "^2.1.1",
+        "formsnap": "^1.0.0",
         "lucide-svelte": "^0.376.1",
         "mode-watcher": "^0.3.0",
+        "sveltekit-superforms": "^2.14.0",
         "tailwind-merge": "^2.3.0",
         "tailwind-scrollbar": "^3.1.0",
         "tailwind-variants": "^0.2.1",
         "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1",
-        "vaul-svelte": "^0.3.0"
+        "vaul-svelte": "^0.3.0",
+        "zod": "^3.23.8"
     }
 }
