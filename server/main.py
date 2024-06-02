@@ -24,6 +24,7 @@ def ping():
 origins = [
     "http://localhost",
     "http://localhost:5173",
+    "https://tauri.localhost",
 ]
 
 app.add_middleware(

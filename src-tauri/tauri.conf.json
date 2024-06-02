@@ -16,7 +16,8 @@
                 "all": true,
                 "request": true,
                 "scope": [
-                    "https://localhost/*"
+                    "https://localhost/*",
+                    "http://localhost/*"
                 ]
             },
             "fs": {
@@ -48,7 +49,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "com.tauri.dev",
+            "identifier": "app.waifu.lab",
             "longDescription": "",
             "macOS": {
                 "entitlements": null,

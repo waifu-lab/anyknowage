@@ -3,7 +3,8 @@
 
 	export const formSchema = z.object({
 		username: z.string().min(2).max(50),
-		avatar: z.string().url()
+		avatar: z.string().url(),
+		botavatar: z.string().url()
 	})
 
 	export type FormSchema = typeof formSchema
@@ -29,7 +30,6 @@
 
 <div>
 	<h3 class="text-lg font-medium">Default</h3>
-	<p class="text-sm text-muted-foreground">...</p>
 </div>
 <Separator class="my-5" />
 
@@ -39,7 +39,7 @@
 			<Form.Label>Username</Form.Label>
 			<Input {...attrs} bind:value={$formData.username} />
 		</Form.Control>
-		<Form.Description>This is your public display name.</Form.Description>
+		<Form.Description>name in display</Form.Description>
 		<Form.FieldErrors />
 	</Form.Field>
 	<Form.Field {form} name="avatar">
@@ -47,7 +47,15 @@
 			<Form.Label>Avatar</Form.Label>
 			<Input {...attrs} bind:value={$formData.avatar} />
 		</Form.Control>
-		<Form.Description>This is your public display name.</Form.Description>
+		<Form.Description>user image for display (only url)</Form.Description>
+		<Form.FieldErrors />
+	</Form.Field>
+	<Form.Field {form} name="botavatar">
+		<Form.Control let:attrs>
+			<Form.Label>BotAvatar</Form.Label>
+			<Input {...attrs} bind:value={$formData.botavatar} />
+		</Form.Control>
+		<Form.Description>user image for display (only url)</Form.Description>
 		<Form.FieldErrors />
 	</Form.Field>
 	<Form.Button>Submit</Form.Button>
