@@ -16,14 +16,18 @@ class Crawer(BasicCrawer):
         return True
 
     def use_chromium(self) -> bool:
-        options = ChromiumOptions()
-        options.headless(True)
-        options.set_address("--no-sandbox")
-        page = ChromiumPage(options)
-        page.get(self.url)
-        self.html = page.html
-        page.quit()
-        return True
+        try:
+            options = ChromiumOptions().auto_port()
+            options.headless(True)
+            options.set_address("--no-sandbox")
+            page = ChromiumPage(options)
+            page.get(self.url)
+            self.html = page.html
+            page.quit()
+            return True
+        except Exception as e:
+            logger.error(e)
+            return False
 
     def get(self):
         if not self.use_request():
