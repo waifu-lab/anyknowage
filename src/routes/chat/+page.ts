@@ -21,7 +21,7 @@ export const load = (async () => {
 				},
 				question: question,
 				maxtoken: setting.maxtoken,
-				apikey: setting.openaikey
+				token: setting.openaikey
 			}
 			const data = await axios.post('http://localhost:8000/chat', body)
 			return data.data

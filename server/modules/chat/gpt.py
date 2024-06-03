@@ -22,10 +22,14 @@ Answer:
 
 
 class GPT(BasicChat):
-    def __init__(self, model: GPTModel,maxtoken:int,key:str) -> None:
+    def __init__(self, model: GPTModel, maxtoken: int, key: str) -> None:
         if get_vectory().count_documents() == 0:
             raise Exception("No documents in the database")
-        llm = OpenAIGenerator(model=str(model),apikey=Secret.from_token(key),generation_kwargs={"max_tokens": maxtoken})
+        llm = OpenAIGenerator(
+            model=str(model),
+            api_key=Secret.from_token(key),
+            generation_kwargs={"max_tokens": maxtoken},
+        )
         reader = ExtractiveReader()
         reader.warm_up()
         query_pipeline = Pipeline()

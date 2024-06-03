@@ -17,6 +17,7 @@ class Mongodb:
         # drop all data in anyknowledge database
         # self.client.anyknowledge.files.drop()
         # self.client.anyknowledge.tempfiles.drop()
+        # self.client.anyknowledge.chats.drop()
         # db = self.client.anyknowledge
         # fs = gridfs.GridFS(db)
         # for file in fs.find():

@@ -17,6 +17,18 @@
 
 	export let filelist: Filetype[]
 
+	function formatBytes(bytes: number, decimals = 2) {
+		if (!+bytes) return '0 Bytes'
+
+		const k = 1024
+		const dm = decimals < 0 ? 0 : decimals
+		const sizes = ['Bytes', 'KB', 'MB', 'GB']
+
+		const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+		return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+	}
+
 	const table = createTable(readable(filelist), {
 		sort: addSortBy(),
 		select: addSelectedRows()
@@ -50,7 +62,8 @@
 		}),
 		table.column({
 			accessor: 'size',
-			header: 'FileSize'
+			header: 'FileSize',
+			cell: ({ value }) => formatBytes(value)
 		}),
 		table.column({
 			accessor: ({ fileid }) => fileid,

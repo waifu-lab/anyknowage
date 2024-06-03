@@ -10,7 +10,9 @@ chat_router = APIRouter()
 
 @chat_router.post("/chat")
 async def new_chat(request: GPT_Request):
-    rt: ExtractedAnswer = GPT(request.model).ASK(request.question)
+    rt: ExtractedAnswer = GPT(
+        request.model, maxtoken=request.maxtoken, key=request.token
+    ).ASK(request.question)
     docs = []
     for answer in rt["reader"]["answers"]:
         docs.append(
