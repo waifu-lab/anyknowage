@@ -40,6 +40,7 @@ class Mongodb:
         db = self.client.anyknowledge
         fs = gridfs.GridFS(db)
         fsid = fs.put(file)
+        filesize = file.__sizeof__()
         db.files.insert_one(
             {
                 "file_id": str(file_id),
@@ -50,6 +51,7 @@ class Mongodb:
                 "vectoe_ids": [vector_id.id for vector_id in vector],
                 "time": datetime.now(pytz.utc),
                 "context": context,
+                "filesize": filesize,
             }
         )
 
