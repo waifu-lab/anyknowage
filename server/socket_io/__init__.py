@@ -7,7 +7,10 @@ from models.notify_leve import NotifyRequest
 
 pwd_path = os.path.dirname(os.path.abspath(__file__))
 socket_router = APIRouter(prefix="/socketio")
-sio = socketio.AsyncServer(async_mode="asgi")
+sio = socketio.AsyncServer(
+    async_mode="asgi",
+    cors_allowed_origins=[],
+)
 
 
 @socket_router.post("/notify")

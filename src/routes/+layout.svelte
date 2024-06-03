@@ -4,6 +4,7 @@
 	import Sidebar from './Sidebar.svelte'
 	import { ModeWatcher } from 'mode-watcher'
 	import { onMount } from 'svelte'
+	import io from '$lib/socketio'
 	onMount(() => {
 		if (localStorage.getItem('default') === null) {
 			localStorage.setItem(
@@ -25,6 +26,12 @@
 					openaikey: ''
 				})
 			)
+		}
+		const sockst = io.get()
+		if (sockst) {
+			sockst.on('notify', () => {
+				console.log('notify')
+			})
 		}
 	})
 </script>
