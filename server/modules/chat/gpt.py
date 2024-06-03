@@ -5,6 +5,7 @@ from haystack.components.generators import OpenAIGenerator
 from haystack.components.readers import ExtractiveReader
 from haystack_integrations.components.embedders.fastembed import FastembedTextEmbedder
 from haystack_integrations.components.retrievers.qdrant import QdrantEmbeddingRetriever
+from haystack.utils import Secret
 from models.ai_models import GPTModel
 from models.basic_chat import BasicChat
 
@@ -21,10 +22,10 @@ Answer:
 
 
 class GPT(BasicChat):
-    def __init__(self, model: GPTModel) -> None:
+    def __init__(self, model: GPTModel,maxtoken:int,key:str) -> None:
         if get_vectory().count_documents() == 0:
             raise Exception("No documents in the database")
-        llm = OpenAIGenerator(model=str(model))
+        llm = OpenAIGenerator(model=str(model),apikey=Secret.from_token(key),generation_kwargs={"max_tokens": maxtoken})
         reader = ExtractiveReader()
         reader.warm_up()
         query_pipeline = Pipeline()

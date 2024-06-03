@@ -1,6 +1,7 @@
 import requests
 from DrissionPage import ChromiumOptions, ChromiumPage
 from models.basic_crawer import BasicCrawer
+from loguru import logger
 
 
 class Crawer(BasicCrawer):
@@ -26,8 +27,10 @@ class Crawer(BasicCrawer):
 
     def get(self):
         if not self.use_request():
+            logger.warning("get html failed using request")
             if not self.use_chromium():
-                raise Exception("get html failed")
+                logger.error("get html failed using chromium")
+                return None
         data = self.getinfo()
         returndata = {
             "Content": data.text,

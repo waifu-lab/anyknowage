@@ -28,3 +28,5 @@ class GPTModel(BaseModel):
 class GPT_Request(BaseModel):
     model: GPTModel
     question: str
+    maxtoken: int
+    token: str

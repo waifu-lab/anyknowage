@@ -4,7 +4,7 @@
 	export const formSchema = z.object({
 		model: z.string(),
 		maxtoken: z.number().int().min(10).max(2000),
-		apikey: z.string()
+		openaikey: z.string()
 	})
 
 	export type FormSchema = typeof formSchema
@@ -72,10 +72,10 @@
 		<Form.Description>max token low: 10 max: 2000</Form.Description>
 		<Form.FieldErrors />
 	</Form.Field>
-	<Form.Field {form} name="apikey">
+	<Form.Field {form} name="openaikey">
 		<Form.Control let:attrs>
-			<Form.Label>Apikey</Form.Label>
-			<Input {...attrs} bind:value={$formData.apikey} />
+			<Form.Label>OpenaiKey</Form.Label>
+			<Input {...attrs} bind:value={$formData.openaikey} />
 		</Form.Control>
 		<Form.Description>openai key</Form.Description>
 		<Form.FieldErrors />

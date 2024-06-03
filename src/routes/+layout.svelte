@@ -21,7 +21,8 @@
 				'chat',
 				JSON.stringify({
 					model: 'gpt-4o',
-					maxtoken: 2000
+					maxtoken: 2000,
+					openaikey: ''
 				})
 			)
 		}

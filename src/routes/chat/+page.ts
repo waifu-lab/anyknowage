@@ -14,11 +14,14 @@ export const load = (async () => {
 
 	const chat = async (question: string) => {
 		try {
+			const setting = JSON.parse(localStorage.getItem('chat') as string)
 			const body = {
 				model: {
-					model: 'gpt-4o'
+					model: setting.model
 				},
-				question: question
+				question: question,
+				maxtoken: setting.maxtoken,
+				apikey: setting.openaikey
 			}
 			const data = await axios.post('http://localhost:8000/chat', body)
 			return data.data
