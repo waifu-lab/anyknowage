@@ -1,4 +1,5 @@
 import axios from 'axios'
+import toast from 'svelte-french-toast'
 
 export const load = async () => {
 	const getposts = async (pos: number) => {
@@ -7,6 +8,10 @@ export const load = async () => {
 			return data.data
 		} catch (e) {
 			console.error(e)
+			toast.error('Cannot connect to server', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
 			throw new Error(`Failed to fetch posts`)
 		}
 	}
@@ -19,9 +24,17 @@ export const load = async () => {
 				text: text
 			}
 			const data = await axios.post('http://localhost:8000/text', body)
+			toast.success('Post successfully', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
 			return data.data
 		} catch (e) {
 			console.error(e)
+			toast.error('upload data failed', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
 			throw new Error(`Failed to post text`)
 		}
 	}
@@ -31,13 +44,22 @@ export const load = async () => {
 			if (files === null) return
 			const body = new FormData()
 			body.append('file', new Blob([files]), filename)
-			await axios.post('http://localhost:8000/upload', body, {
+			const data = await axios.post('http://localhost:8000/upload', body, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}
 			})
+			toast.success('Post successfully', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
+			return data.data
 		} catch (e) {
 			console.error(e)
+			toast.error('upload data failed', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
 			throw new Error(`Failed to post file`)
 		}
 	}

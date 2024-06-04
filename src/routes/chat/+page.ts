@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types'
 import axios from 'axios'
+import toast from 'svelte-french-toast'
 
 export const load = (async () => {
 	const getchats = async (pos: number) => {
@@ -8,6 +9,10 @@ export const load = (async () => {
 			return data.data
 		} catch (e) {
 			console.error(e)
+			toast.error('Cannot connect to server', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
 			throw new Error(`Failed to fetch posts`)
 		}
 	}
@@ -27,7 +32,11 @@ export const load = (async () => {
 			return data.data
 		} catch (e) {
 			console.error(e)
-			throw new Error(`Failed to fetch posts`)
+			toast.error('Cannot connect to server', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
+			throw new Error(`Failed to post text`)
 		}
 	}
 	return {

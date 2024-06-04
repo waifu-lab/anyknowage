@@ -5,6 +5,7 @@
 	import { ModeWatcher } from 'mode-watcher'
 	import { onMount } from 'svelte'
 	import io from '$lib/socketio'
+	import toast, { Toaster } from 'svelte-french-toast'
 	onMount(() => {
 		if (localStorage.getItem('default') === null) {
 			localStorage.setItem(
@@ -36,6 +37,7 @@
 	})
 </script>
 
+<Toaster />
 <div class="app">
 	<ModeWatcher />
 	<Sidebar />
