@@ -1,10 +1,12 @@
 import io
+import requests
 from urllib.parse import urlparse
 
 from db import get_mongodb, get_vectory
 from haystack.document_stores.types import DuplicatePolicy
 from loguru import logger
 from models.file import File
+from models.notify_leve import NotifyRequest
 from modules.knowladge.audio import audio_file_parser
 from modules.knowladge.image import image_file_parser
 from modules.knowladge.strtext import parse_str
@@ -23,6 +25,14 @@ ext_to_parser = {
     # "jpeg": image_file_parser,
     # "png": image_file_parser,
 }
+
+
+def send_notify(level: str, message: str):
+    """
+    通知所有連接的client
+    """
+    notify = NotifyRequest(level=level, message=message)
+    requests.post("http://localhost:8000/socketio/notify", json=notify.model_dump()())
 
 
 def is_url(url: str) -> bool:
@@ -51,10 +61,12 @@ def add_knowledge(data: dict | str):
 
     if file.is_null():
         logger.error("❌ File is empty")
+        send_notify("error", "File is empty")
         return
 
     if get_mongodb().get_file_sha1(file.hash):
         logger.error("❌ File already exists")
+        send_notify("error", "File already exists")
         return
 
     if file.istext:
@@ -67,14 +79,17 @@ def add_knowledge(data: dict | str):
             file.loader = ext_to_parser.get(file.name.split(".")[-1])
         else:
             logger.error("❌ File type not supported")
+            send_notify("error", "File type not supported")
             return
 
     embedding = file.run()
     if embedding is None:
         logger.error("❌ File is empty")
+        send_notify("error", "File is empty")
         return
     if embedding["documents"] == []:
         logger.error("❌ File has no content")
+        send_notify("error", "File has no content")
         return
     logger.debug(embedding)
     if file.istext:
@@ -97,3 +112,5 @@ def add_knowledge(data: dict | str):
     get_vectory().write_documents(
         documents=embedding["documents"], policy=DuplicatePolicy.OVERWRITE
     )
+    logger.info("✅ File has been added")
+    send_notify("success", "File has been added")
