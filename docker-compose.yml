@@ -25,6 +25,10 @@ services:
       - MONGO_VOLUMES:/data/db
     ports:
       - '27017:27017'
+    deploy:
+      resources:
+        limits:
+          memory: 1G
 
   qdrant:
     container_name: qdrant
@@ -35,12 +39,20 @@ services:
       - '6334:6334'
     volumes:
       - DQRANT_VOLUMES:/qdrant/storage
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
   anyknowledge:
     container_name: anyknowledge
     build:
       context: server
       dockerfile: Dockerfile
+    environment:
+      - VECTOR_DB_URL=qdrant
+      - VECTOR_DB_PORT=6333
+      - MONGODB_URL=mongodb:27017
     restart: always
     ports:
       - '8000:8000'
@@ -48,13 +60,23 @@ services:
       - mongodb
       - redis
       - qdrant
+    deploy:
+      resources:
+        limits:
+          memory: 1G
 
   anyknowledge-worker:
     container_name: anyknowledge-worker
     build:
       context: server
       dockerfile: Dockerfile
+    environment:
+      - REDIS_DB=redis:6379
     restart: always
-    command: dramatiq worker
+    command: dramatiq -p 4 -t 4 worker
     depends_on:
       - redis
+    deploy:
+      resources:
+        limits:
+          memory: 4G

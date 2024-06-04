@@ -1,14 +1,16 @@
 FROM python:3.11-buster as build
 
-
 RUN pip install poetry==1.8.3
 
-ENV POETRY_CACHE_DIR=/tmp/poetry_cache
+ENV POETRY_CACHE_DIR=/tmp/poetry_cache \
+    POETRY_VIRTUALENVS_IN_PROJECT=true \
+    VIRTUAL_ENV=/app/.venv
 
 WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 
-RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
+RUN poetry config virtualenvs.create true \
+    && poetry install && rm -rf $POETRY_CACHE_DIR
 
 FROM python:3.11-slim-buster as runtime
 

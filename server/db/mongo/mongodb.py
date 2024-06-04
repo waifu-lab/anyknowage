@@ -5,13 +5,16 @@ import bson
 import gridfs
 import pymongo
 import pytz
+import os
 from haystack.dataclasses import Document
+
+mongodb_url = os.getenv("MONGODB_URL", "localhost:27017")
 
 
 class Mongodb:
     def __init__(self):
         self.client = pymongo.MongoClient(
-            "mongodb://admin:password@localhost:27017",
+            f"mongodb://admin:password@{mongodb_url}",
             connect=False,
         )
         # drop all data in anyknowledge database
