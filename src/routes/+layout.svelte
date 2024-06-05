@@ -5,6 +5,7 @@
 	import { ModeWatcher } from 'mode-watcher'
 	import { onMount } from 'svelte'
 	import io from '$lib/socketio'
+	import { pushlog } from '$lib/log'
 	import toast, { Toaster } from 'svelte-french-toast'
 	onMount(() => {
 		if (localStorage.getItem('default') === null) {
@@ -44,6 +45,10 @@
 						style: 'background: var(--background); color: var(--foreground);'
 					})
 				}
+			})
+			sockst.on('logger', (log) => {
+				console.log(log)
+				pushlog(log)
 			})
 		}
 	})
