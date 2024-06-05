@@ -6,8 +6,11 @@
 	import { Label } from '$lib/components/ui/label/index.js'
 	import Talkbox from '$lib/components/talkbox/talkbox.svelte'
 	import { tick } from 'svelte'
+	import toast from 'svelte-french-toast'
 	let chatstr = ''
 	export let data
+
+	let defauledata = JSON.parse(localStorage.getItem('default') as string)
 
 	let chatTrigger = 0
 	let istinking = false
@@ -37,7 +40,14 @@
 		if (!message.trim()) return
 		istinking = true
 		scrollToBottom(chatArea, true)
-		await data.chat(message)
+		try {
+			await data.chat(message)
+		} catch (e) {
+			toast.error('something wrong', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
+		}
 		chatTrigger += 1
 		chatPromise = data.chats(chatTrigger)
 		chatPromise.then(() => {
@@ -71,19 +81,19 @@
 									<Talkbox
 										name="User"
 										messages={[chat.ask]}
-										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
+										avatar={defauledata.avatar}
 									/>
 									<Talkbox
 										name="Bot"
 										messages={[chat.answer.answer]}
-										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
+										avatar={defauledata.botavatar}
 									/>
 								{/each}
 								{#if istinking}
 									<Talkbox
 										name="Bot"
 										messages={['Thinking...']}
-										avatar="https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024"
+										avatar={defauledata.botavatar}
 										isloading={true}
 									/>
 								{/if}

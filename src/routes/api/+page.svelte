@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { get_logs } from '$lib/log'
 	import io from '$lib/socketio'
+	import { message } from 'sveltekit-superforms'
 	const sockst = io.get()
+
 	let logs = get_logs()
 	if (sockst) {
 		sockst.on('logger', () => {
@@ -19,7 +21,22 @@
 		</header>
 		<main class="flex-1 overflow-auto p-4">
 			{#each logs as log}
-				<p>{log.message}</p>
+				{#if log.message.split('|')[1].trim() == 'INFO'}
+					<span>{log.message.split('|')[0]}</span>
+					<span class="text-green-500">{log.message.split('|')[1]}</span>
+					<span>{log.message.split('|')[2]}</span>
+					<br />
+				{:else if log.message.split('|')[1].trim() == 'WARNING'}
+					<span>{log.message.split('|')[0]}</span>
+					<span class="text-orange-500">{log.message.split('|')[1]}</span>
+					<span>{log.message.split('|')[2]}</span>
+				{:else if log.message.split('|')[1].trim() == 'ERROR'}
+					<span>{log.message.split('|')[0]}</span>
+					<span class="text-red-500">{log.message.split('|')[1]}</span>
+					<span>{log.message.split('|')[2]}</span>
+				{:else}
+					<p>{log.message}</p>
+				{/if}
 			{/each}
 		</main>
 	</div>

@@ -1,6 +1,10 @@
-const logs: string[] = []
+type Log = {
+	message: string
+}
 
-export function pushlog(message: string) {
+const logs: Log[] = []
+
+export function pushlog(message: Log) {
 	logs.push(message)
 }
 

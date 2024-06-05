@@ -16,6 +16,7 @@
 	import * as Form from '$lib/components/ui/form'
 	import { superForm } from 'sveltekit-superforms'
 	import { zodClient } from 'sveltekit-superforms/adapters'
+	import toast from 'svelte-french-toast'
 	let defauledata = JSON.parse(localStorage.getItem('default') as string)
 	const form = superForm(defauledata, {
 		SPA: true,
@@ -23,6 +24,10 @@
 		resetForm: false,
 		onSubmit() {
 			localStorage.setItem('default', JSON.stringify($formData))
+			toast.success('Saved', {
+				position: 'top-right',
+				style: 'background: var(--background); color: var(--foreground);'
+			})
 		}
 	})
 	const { form: formData, enhance } = form
