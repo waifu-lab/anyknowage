@@ -18,7 +18,8 @@ ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH"
 
 RUN apt-get update && apt-get install -y \
-    pandoc
+    pandoc \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 

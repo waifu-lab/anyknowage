@@ -3,9 +3,12 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 from haystack.components.audio import LocalWhisperTranscriber
-from loguru import logger
+
 from models.file import File
 from modules.knowladge.basic import basic_file_parser
+from util.logger import get_logger
+
+logger = get_logger()
 
 
 def video_file_parser(file: File):

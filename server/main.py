@@ -2,7 +2,7 @@ from db import get_mongodb, get_vectory
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from loguru import logger
+from util.logger import get_logger
 from routes.chat import chat_router
 from routes.file import file_router
 from routes.text import text_router
@@ -14,6 +14,7 @@ get_vectory()
 get_mongodb()
 
 app = FastAPI()
+logger = get_logger()
 
 
 @app.get("/ping")

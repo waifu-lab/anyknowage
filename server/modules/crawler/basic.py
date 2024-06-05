@@ -1,7 +1,9 @@
 import requests
 from DrissionPage import ChromiumOptions, ChromiumPage
 from models.basic_crawer import BasicCrawer
-from loguru import logger
+from util.logger import get_logger
+
+logger = get_logger()
 
 
 class Crawer(BasicCrawer):

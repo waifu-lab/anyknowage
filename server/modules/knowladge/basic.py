@@ -4,9 +4,13 @@ from haystack.components.converters import PyPDFToDocument
 from haystack.components.preprocessors import DocumentCleaner, DocumentSplitter
 from haystack.dataclasses import Document
 from haystack_integrations.components.embedders.fastembed import (
-    FastembedDocumentEmbedder, FastembedTextEmbedder)
-from loguru import logger
+    FastembedDocumentEmbedder,
+    FastembedTextEmbedder,
+)
 
+from util.logger import get_logger
+
+logger = get_logger()
 # TODO: 中文分詞出現問題
 
 

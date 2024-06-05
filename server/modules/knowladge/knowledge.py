@@ -1,10 +1,10 @@
 import io
 import requests
 from urllib.parse import urlparse
-
+import threading
 from db import get_mongodb, get_vectory
 from haystack.document_stores.types import DuplicatePolicy
-from loguru import logger
+
 from models.file import File
 from models.notify_leve import NotifyRequest
 from modules.knowladge.audio import audio_file_parser
@@ -13,7 +13,9 @@ from modules.knowladge.strtext import parse_str
 from modules.knowladge.textfiles import parse_docx, parse_markdown, parse_pdf, parse_txt
 from modules.knowladge.url import parse_url
 from modules.knowladge.video import video_file_parser
+from util.logger import get_logger
 
+logger = get_logger()
 ext_to_parser = {
     "txt": parse_txt,
     "pdf": parse_pdf,
@@ -32,7 +34,12 @@ def send_notify(level: str, message: str):
     通知所有連接的client
     """
     notify = NotifyRequest(level=level, message=message)
-    requests.post("http://localhost:8000/socketio/notify", json=notify.model_dump()())
+
+    def do_request():
+        requests.post("http://localhost:8000/socketio/notify", json=notify.model_dump())
+
+    thread = threading.Thread(target=do_request)
+    thread.start()
 
 
 def is_url(url: str) -> bool:

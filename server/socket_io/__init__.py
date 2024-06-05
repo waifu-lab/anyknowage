@@ -2,9 +2,11 @@ import os
 
 import socketio
 from fastapi import APIRouter
-from loguru import logger
-from models.notify_leve import NotifyRequest
 
+from models.notify_leve import NotifyRequest, LoggerRequest
+from util.logger import get_logger
+
+logger = get_logger()
 pwd_path = os.path.dirname(os.path.abspath(__file__))
 socket_router = APIRouter(prefix="/socketio")
 sio = socketio.AsyncServer(
@@ -19,6 +21,15 @@ async def notify(request: NotifyRequest):
     通知所有連接的client
     """
     await sio.emit("notify", request.model_dump(), namespace="/")
+    return {"status": "ok"}
+
+
+@socket_router.post("/logger")
+async def wslogger(request: LoggerRequest):
+    """
+    發送log
+    """
+    await sio.emit("logger", request.model_dump(), namespace="/")
     return {"status": "ok"}
 
 

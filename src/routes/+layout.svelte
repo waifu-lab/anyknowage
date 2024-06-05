@@ -30,8 +30,20 @@
 		}
 		const sockst = io.get()
 		if (sockst) {
-			sockst.on('notify', () => {
+			sockst.on('notify', (notify) => {
 				console.log('notify')
+				console.log(notify)
+				if (notify.level === 'error') {
+					toast.error(notify.message, {
+						position: 'top-right',
+						style: 'background: var(--background); color: var(--foreground);'
+					})
+				} else {
+					toast.success(notify.message, {
+						position: 'top-right',
+						style: 'background: var(--background); color: var(--foreground);'
+					})
+				}
 			})
 		}
 	})

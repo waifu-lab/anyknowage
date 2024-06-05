@@ -14,3 +14,7 @@ class Level(str, Enum):
 class NotifyRequest(BaseModel):
     level: Level
     message: str
+
+
+class LoggerRequest(BaseModel):
+    message: str

@@ -1,10 +1,11 @@
 import re
 
-from loguru import logger
 from models.file import File
 from modules.crawler import Crawer, Github, Gitlab, twitter
 from modules.knowladge.basic import basic_file_parser
+from util.logger import get_logger
 
+logger = get_logger()
 special_urls = {
     "github.com": Github,
     "gitlab.com": Gitlab,
