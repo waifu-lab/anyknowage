@@ -220,6 +220,7 @@
 							class="sticky top-[0.3rem] ml-auto  gap-1.5"
 							on:click={() => {
 								posttext(input)
+								input = ''
 							}}
 						>
 							<CornerDownLeft class="size-3.5" />
