@@ -8,8 +8,8 @@
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "test": "vitest",
-        "lint": "prettier --check . && eslint .",
-        "format": "prettier --write .",
+        "lint": "prettier --check ./src && eslint ./src",
+        "format": "prettier --write ./src",
         "tauridev": "tauri dev"
     },
     "devDependencies": {
