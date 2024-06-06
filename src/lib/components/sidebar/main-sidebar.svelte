@@ -5,10 +5,7 @@
 	import { page } from '$app/stores'
 	import { Button } from '$lib/components/ui/button/index.js'
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js'
-	import FileUp from 'lucide-svelte/icons/file-up'
-	import Archive from 'lucide-svelte/icons/Archive'
-	import MessageCircleMore from 'lucide-svelte/icons/message-circle-more'
-	import SquareTerminal from 'lucide-svelte/icons/square-terminal'
+	import { FileUp, Archive, MessageCircleMore, SquareTerminal } from 'lucide-svelte'
 
 	let className: string | undefined | null = undefined
 	export let items: { href: string; svg: string; Tooltip: string }[]

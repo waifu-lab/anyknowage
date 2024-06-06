@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CornerDownLeft from 'lucide-svelte/icons/corner-down-left'
+	import { CornerDownLeft } from 'lucide-svelte'
 	import { Badge } from '$lib/components/ui/badge/index.js'
 	import { Button } from '$lib/components/ui/button/index.js'
 	import { Textarea } from '$lib/components/ui/textarea/index.js'

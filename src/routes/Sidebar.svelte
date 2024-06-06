@@ -1,13 +1,8 @@
 <script lang="ts">
-	import Box from 'lucide-svelte/icons/box'
-
-	import Settings from 'lucide-svelte/icons/settings'
-
 	import { Button } from '$lib/components/ui/button/index.js'
 	import { toggleMode } from 'mode-watcher'
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js'
-	import Sun from 'lucide-svelte/icons/sun'
-	import Moon from 'lucide-svelte/icons/moon'
+	import { Box, Sun, Moon, Settings } from 'lucide-svelte'
 	import MainSidebar from '$lib/components/sidebar/main-sidebar.svelte'
 
 	const sidebarNavItems = [

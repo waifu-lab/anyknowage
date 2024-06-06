@@ -4,7 +4,7 @@
 	import * as Table from '$lib/components/ui/table'
 	import Fileaction from './file-table-action.svelte'
 	import { addSelectedRows, addSortBy } from 'svelte-headless-table/plugins'
-	import ArrowUpDown from 'lucide-svelte/icons/arrow-up-down'
+	import { ArrowUpDown } from 'lucide-svelte'
 	import { Button } from '$lib/components/ui/button'
 	import Clickbox from './file-table-click.svelte'
 

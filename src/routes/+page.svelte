@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Paperclip from 'lucide-svelte/icons/paperclip'
-	import { FolderUp, CornerDownLeft, X } from 'lucide-svelte'
+	import { FolderUp, CornerDownLeft, X, Paperclip } from 'lucide-svelte'
 	import { Badge } from '$lib/components/ui/badge/index.js'
 	import { Button } from '$lib/components/ui/button/index.js'
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js'

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Ellipsis from 'lucide-svelte/icons/ellipsis'
+	import { Ellipsis } from 'lucide-svelte'
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu'
 	import { Button } from '$lib/components/ui/button'
 	import { mode } from 'mode-watcher'
