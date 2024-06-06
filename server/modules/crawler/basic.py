@@ -21,7 +21,7 @@ class Crawer(BasicCrawer):
         try:
             options = ChromiumOptions().auto_port()
             options.headless(True)
-            options.set_address("--no-sandbox")
+            options.set_argument("--no-sandbox")
             page = ChromiumPage(options)
             page.get(self.url)
             self.html = page.html

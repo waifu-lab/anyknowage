@@ -11,6 +11,10 @@ services:
     restart: always
     ports:
       - 6379:6379
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   mongodb:
     image: mongo
@@ -25,6 +29,10 @@ services:
       - MONGO_VOLUMES:/data/db
     ports:
       - '27017:27017'
+    deploy:
+      resources:
+        limits:
+          memory: 1G
 
   qdrant:
     container_name: qdrant
@@ -35,3 +43,7 @@ services:
       - '6334:6334'
     volumes:
       - DQRANT_VOLUMES:/qdrant/storage
+    deploy:
+      resources:
+        limits:
+          memory: 1G

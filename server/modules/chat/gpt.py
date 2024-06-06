@@ -40,7 +40,7 @@ class GPT(BasicChat):
             ),
         )
         query_pipeline.add_component(
-            "retriever", QdrantEmbeddingRetriever(document_store=get_vectory())
+            "retriever", QdrantEmbeddingRetriever(document_store=get_vectory(), top_k=2)
         )
         query_pipeline.add_component(
             "prompt_builder", PromptBuilder(template=prompt_template)

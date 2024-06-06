@@ -11,6 +11,10 @@ services:
     restart: always
     ports:
       - 6379:6379
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   mongodb:
     image: mongo
@@ -42,9 +46,10 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: 1G
 
   anyknowledge:
+    image: phillychi3/anyknowledge-server:latest
     container_name: anyknowledge
     build:
       context: server
@@ -66,6 +71,7 @@ services:
           memory: 1G
 
   anyknowledge-worker:
+    image: phillychi3/anyknowledge-server:latest
     container_name: anyknowledge-worker
     build:
       context: server

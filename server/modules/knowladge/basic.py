@@ -9,10 +9,18 @@ from haystack_integrations.components.embedders.fastembed import (
 )
 from ckip_transformers.nlp import CkipWordSegmenter
 import opencc
+import re
 
 from util.logger import get_logger
 
 logger = get_logger()
+cleaner = DocumentCleaner()
+splitter = DocumentSplitter(split_by="word", split_length=100)
+document_embedder = FastembedDocumentEmbedder(
+    model="intfloat/multilingual-e5-large",
+    parallel=0,
+    prefix="query:",
+)
 
 
 def pdf_parser(file: Path):
@@ -25,27 +33,18 @@ def basic_file_parser(text: list[Document]):
     logger.info("</> Embedding text...")
 
     def is_chinese(text):
-        for ch in text:
-            if "\u4e00" <= ch <= "\u9fff":
-                return True
-        return False
+        return re.search("[\u4e00-\u9fff]", text) is not None
 
     if is_chinese(text[0].content):
+        logger.info("Chinese text detected")
         converter = opencc.OpenCC("s2t.json")
         chtext = converter.convert(text[0].content)
         ws_driver = CkipWordSegmenter(model="bert-base")
         ws = ws_driver([chtext])
         text[0].content = " ".join(ws[0])
 
-    cleaner = DocumentCleaner()
-    splitter = DocumentSplitter(split_by="word", split_length=100)
     splitted_docs = splitter.run(cleaner.run(text)["documents"])
-    document_embedder = FastembedDocumentEmbedder(
-        model="intfloat/multilingual-e5-large",
-        parallel=0,
-        meta_fields_to_embed=text[0].meta.keys(),
-        prefix="query:",
-    )
+    document_embedder.meta_fields_to_embed = text[0].meta.keys()
     logger.info("🔥 Warming up the embedder")
     document_embedder.warm_up()
     documents_with_embeddings = document_embedder.run(splitted_docs["documents"])
