@@ -7,11 +7,12 @@ from haystack_integrations.components.embedders.fastembed import (
     FastembedDocumentEmbedder,
     FastembedTextEmbedder,
 )
+from ckip_transformers.nlp import CkipWordSegmenter
+import opencc
 
 from util.logger import get_logger
 
 logger = get_logger()
-# TODO: 中文分詞出現問題
 
 
 def pdf_parser(file: Path):
@@ -22,6 +23,20 @@ def pdf_parser(file: Path):
 
 def basic_file_parser(text: list[Document]):
     logger.info("</> Embedding text...")
+
+    def is_chinese(text):
+        for ch in text:
+            if "\u4e00" <= ch <= "\u9fff":
+                return True
+        return False
+
+    if is_chinese(text[0].content):
+        converter = opencc.OpenCC("s2t.json")
+        chtext = converter.convert(text[0].content)
+        ws_driver = CkipWordSegmenter(model="bert-base")
+        ws = ws_driver([chtext])
+        text[0].content = " ".join(ws[0])
+
     cleaner = DocumentCleaner()
     splitter = DocumentSplitter(split_by="word", split_length=100)
     splitted_docs = splitter.run(cleaner.run(text)["documents"])

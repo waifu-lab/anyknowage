@@ -30,6 +30,8 @@ requests = "^2.32.2"
 drissionpage = "^4.0.4.23"
 newspaper3k = "^0.2.8"
 lxml-html-clean = "^0.1.1"
+ckip-transformers = "^0.3.4"
+opencc = "^1.1.7"
 
 [build-system]
 requires = ["poetry-core"]
