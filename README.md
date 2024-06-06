@@ -5,9 +5,7 @@
 ![APP Build](https://github.com/waifu-lab/anyknowage/actions/workflows/build_app.yml/badge.svg)
 ![Docker Build](https://github.com/waifu-lab/anyknowage/actions/workflows/build_docker.yml/badge.svg)
 
-## <!-- [docs](https://www.google.com) -->
-
----
+ <!-- [docs](https://www.google.com) -->
 
 ## What is AnyKnowledge
 
