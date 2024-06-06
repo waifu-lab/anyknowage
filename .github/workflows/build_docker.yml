@@ -3,7 +3,7 @@ name: 'build-docker'
 on:
   push:
     branches:
-      - release
+      - main
 
 jobs:
   build:
