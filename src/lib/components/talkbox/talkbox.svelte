@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { FileText } from 'lucide-svelte'
 	import Loading from '$lib/components/loadingcircle.svelte'
+	import * as Dialog from '$lib/components/ui/dialog/index.js'
 	export let avatar: string | undefined = undefined
 	export let name: string = 'user'
 	export let messages: string[] = []
@@ -20,15 +21,24 @@
 		</div>
 		<div class="talkbox_body">
 			{#if ext != '.txt' && ext != undefined}
-				<div class=" flex items-center space-x-4 rounded-md border p-4">
-					<FileText />
-					<div class="flex-1 space-y-1">
-						<p class="text-sm font-medium leading-none">{filename}</p>
-					</div>
-				</div>
+				<Dialog.Root>
+					<Dialog.Trigger>
+						<div class=" flex items-center space-x-4 rounded-md border p-4">
+							<FileText />
+							<div class="flex-1 space-y-1">
+								<p class="text-sm font-medium leading-none">{filename}</p>
+							</div>
+						</div></Dialog.Trigger
+					>
+					<Dialog.Content class="sm:max-w-[425px]"></Dialog.Content>
+				</Dialog.Root>
 			{/if}
 			{#if context != undefined}
-				<p>{@html context.replace(/\n/g, '<br>')}</p>
+				{#if new RegExp('(https?://(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?://(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})').test(context)}
+					<a href={context} target="_blank" class="hover:underline">{context}</a>
+				{:else}
+					<p>{@html context.replace(/\n/g, '<br>')}</p>
+				{/if}
 			{/if}
 			<div class="flex items-center">
 				{#if isloading}
