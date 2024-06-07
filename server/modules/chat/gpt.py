@@ -10,8 +10,8 @@ from models.ai_models import GPTModel
 from models.basic_chat import BasicChat
 
 prompt_template = """
-Using only the information contained in these documents return a brief answer (max 100 words).
-If the answer cannot be inferred from the documents, respond \"I don't know\".
+First Using only the information contained in these documents return a brief answer (max {{max_tokens}} words).
+If the answer cannot be inferred from the documents, find the answer from your external knowledge, and tell user \"Source Not From Knowledge\".
 Documents:
 {% for doc in documents %}
     {{ doc.content }}
@@ -23,6 +23,7 @@ Answer:
 
 class GPT(BasicChat):
     def __init__(self, model: GPTModel, maxtoken: int, key: str) -> None:
+        self.maxtoken = maxtoken
         if get_vectory().count_documents() == 0:
             raise Exception("No documents in the database")
         llm = OpenAIGenerator(
@@ -57,7 +58,7 @@ class GPT(BasicChat):
         results = self.query_pipeline.run(
             {
                 "text_embedder": {"text": question},
-                "prompt_builder": {"question": question},
+                "prompt_builder": {"question": question, "max_tokens": self.maxtoken},
                 "reader": {"query": question, "top_k": 2},
             },
             include_outputs_from=["reader"],

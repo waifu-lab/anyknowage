@@ -30,10 +30,12 @@
 					<span>{log.message.split('|')[0]}</span>
 					<span class="text-orange-500">{log.message.split('|')[1]}</span>
 					<span>{log.message.split('|')[2]}</span>
+					<br />
 				{:else if log.message.split('|')[1].trim() == 'ERROR'}
 					<span>{log.message.split('|')[0]}</span>
 					<span class="text-red-500">{log.message.split('|')[1]}</span>
 					<span>{log.message.split('|')[2]}</span>
+					<br />
 				{:else}
 					<p>{log.message}</p>
 				{/if}
