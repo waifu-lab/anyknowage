@@ -1885,27 +1885,14 @@ reference = "HEAD"
 resolved_reference = "ba3f3cd54b0e5b8ce1ab3de13e32122d0d5f98ab"
 
 [[package]]
-name = "opencc"
-version = "1.1.7"
-description = "Conversion between Traditional and Simplified Chinese"
+name = "opencc-python-reimplemented"
+version = "0.1.7"
+description = "OpenCC made with Python"
 optional = false
 python-versions = "*"
 files = [
-    {file = "OpenCC-1.1.7-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:ba77d5eb376129adcad090a07b0edbee293f26513f14a135a9cb17af004defd1"},
-    {file = "OpenCC-1.1.7-cp310-cp310-manylinux1_x86_64.whl", hash = "sha256:fc4fb3ec08dcbdb430cbd70d14f9457f2b2ef2d51b08bf079b9cee0c6def3eed"},
-    {file = "OpenCC-1.1.7-cp310-cp310-win_amd64.whl", hash = "sha256:8fa764bbb93ff97f50d1f70ca2542c9108adb763845d690e256664a61c98f914"},
-    {file = "OpenCC-1.1.7-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:8aa4b1203bf78ced40ae4da7206089ccd459f823a1b05f311b653eb08dce7d0d"},
-    {file = "OpenCC-1.1.7-cp311-cp311-manylinux1_x86_64.whl", hash = "sha256:3ed6f128383375b9dc5c3db02ffa9d6ac1a14242656414bab85a18ef65daf645"},
-    {file = "OpenCC-1.1.7-cp311-cp311-win_amd64.whl", hash = "sha256:d2d4705b3f599903784b4d4be6a557c591aeeb93d2b99b8f19d3e13dee4fab10"},
-    {file = "OpenCC-1.1.7-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:253e7d636ad0aad2e70e616d2185181e0104687f53ec38974f7b67221c475382"},
-    {file = "OpenCC-1.1.7-cp312-cp312-manylinux1_x86_64.whl", hash = "sha256:dc5d6443b833e1a45bcad4d4312c680d9d574a365491357165d927a3eecac5f0"},
-    {file = "OpenCC-1.1.7-cp312-cp312-win_amd64.whl", hash = "sha256:7f3f843f0b47afa0bff91ea5b9fbf9968f19ffbaffda9508615993058246ca3c"},
-    {file = "OpenCC-1.1.7-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:49c2eb39f636c948eaa21a84f4553da761a9cca5aa0dede8570729d572712531"},
-    {file = "OpenCC-1.1.7-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:49bbf40042702a743ad5b65398fc3faf1582e41fc948cd9bbbabe7c3e5366cd6"},
-    {file = "OpenCC-1.1.7-cp38-cp38-win_amd64.whl", hash = "sha256:06092f06e4b8a1f2563df03214c9f6fa457c9ff6d114f76bf9fb374cc2a4591f"},
-    {file = "OpenCC-1.1.7-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:a16b7ed7d01b77b133a51e41903c5c83486de5be5483164c869ed34b9bbfdaf7"},
-    {file = "OpenCC-1.1.7-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:b55ad5edf93a45e89519fa4aa80384d7021fd795fdf8c9315b6898fa2a0e202a"},
-    {file = "OpenCC-1.1.7-cp39-cp39-win_amd64.whl", hash = "sha256:6455d2548e2211d28cfa68d25aceeb4ff06c6a396264dcefe5a2b885ffeaf783"},
+    {file = "opencc-python-reimplemented-0.1.7.tar.gz", hash = "sha256:4f777ea3461a25257a7b876112cfa90bb6acabc6dfb843bf4d11266e43579dee"},
+    {file = "opencc_python_reimplemented-0.1.7-py2.py3-none-any.whl", hash = "sha256:41b3b92943c7bed291f448e9c7fad4b577c8c2eae30fcfe5a74edf8818493aa6"},
 ]
 
 [[package]]
@@ -4059,4 +4046,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "e09517ddeb29d2b807614aa1e8080238082ca58c69b56b3e0dc1dd89c22cacf8"
+content-hash = "c4fe3ff8dbff06b0dedac2b12d2409a6fca5eb09d3532916818d38f205e431fb"

@@ -19,7 +19,6 @@ ENV VIRTUAL_ENV=/app/.venv \
 
 RUN apt-get update && apt-get install -y \
     pandoc \
-    opencc \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build ${VIRTUAL_ENV} ${VIRTUAL_ENV}

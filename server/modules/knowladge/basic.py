@@ -8,7 +8,7 @@ from haystack_integrations.components.embedders.fastembed import (
     FastembedTextEmbedder,
 )
 from ckip_transformers.nlp import CkipWordSegmenter
-import opencc
+from opencc import OpenCC
 import re
 
 from util.logger import get_logger
@@ -37,7 +37,7 @@ def basic_file_parser(text: list[Document]):
 
     if is_chinese(text[0].content):
         logger.info("Chinese text detected")
-        converter = opencc.OpenCC("s2t.json")
+        converter = OpenCC("s2t")
         chtext = converter.convert(text[0].content)
         ws_driver = CkipWordSegmenter(model="bert-base")
         ws = ws_driver([chtext])
@@ -61,17 +61,3 @@ def basic_file_parser(text: list[Document]):
 #     text_embedder.warm_up()
 #     text_emnedding = text_embedder.run(text)
 #     return text_emnedding
-
-
-if __name__ == "__main__":
-    import sys
-
-    sys.path.append(r"C:\Users\phill\OneDrive\Documents\coed_thing\anyknowage\server")
-    from db import vectory
-
-    with open(
-        r"C:\Users\phill\OneDrive\Documents\coed_thing\anyknowage\server\readme_EN.txt",
-        "r",
-    ) as file:
-        file = file.read()
-    basic_file_parser([Document(content=file, meta={"title": "readme_EN.txt"})])
