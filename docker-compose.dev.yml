@@ -47,3 +47,46 @@ services:
       resources:
         limits:
           memory: 1G
+
+  anyknowledge:
+    image: phillychi3/anyknowledge-server:latest
+    container_name: anyknowledge
+    build:
+      context: server
+      dockerfile: Dockerfile
+      cache_from:
+        - phillychi3/anyknowledge-server:latest
+    environment:
+      - VECTOR_DB_URL=qdrant
+      - VECTOR_DB_PORT=6333
+      - MONGODB_URL=mongodb:27017
+    restart: always
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mongodb
+      - redis
+      - qdrant
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  anyknowledge-worker:
+    image: phillychi3/anyknowledge-server:latest
+    container_name: anyknowledge-worker
+    build:
+      context: server
+      dockerfile: Dockerfile
+      cache_from:
+        - phillychi3/anyknowledge-server:latest
+    environment:
+      - REDIS_DB=redis:6379
+    restart: always
+    command: dramatiq -p 4 -t 4 worker
+    depends_on:
+      - redis
+    deploy:
+      resources:
+        limits:
+          memory: 4G
