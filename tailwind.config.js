@@ -1,11 +1,20 @@
 import { fontFamily } from 'tailwindcss/defaultTheme'
-
+import tailwindMdBase from '@geoffcodesthings/tailwind-md-base'
 /** @type {import('tailwindcss').Config} */
 const config = {
 	darkMode: ['class'],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	safelist: ['dark'],
 	theme: {
+		markdownBase: {
+			blockquote: {
+				color: 'hsl(var(--foreground) / <alpha-value>)'
+			},
+			code: {
+				backgroundColor: 'var(--code-bg)',
+				color: 'var(--code-text)'
+			}
+		},
 		container: {
 			center: true,
 			padding: '2rem',
@@ -59,7 +68,7 @@ const config = {
 			}
 		}
 	},
-	plugins: [require('tailwind-scrollbar')]
+	plugins: [require('tailwind-scrollbar'), tailwindMdBase()]
 }
 
 export default config

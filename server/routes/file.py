@@ -41,6 +41,15 @@ async def download_file(file_id: str) -> bytes:
     return Response(file, headers=header)
 
 
+@file_router.get("/file_text")
+async def get_file_text(file_id: str) -> dict:
+    filedata = get_mongodb().get_file_from_id(file_id)
+    if filedata["ext"] not in ["txt", "md"]:
+        return {"error": "not text file"}
+    file = get_mongodb().download_file(file_id)
+    return {"text": file.decode("utf-8")}
+
+
 @file_router.delete("/file")
 async def delete_file(file_id: str):
     filedata = get_mongodb().get_file_from_id(file_id)

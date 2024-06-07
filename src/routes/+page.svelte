@@ -158,6 +158,7 @@
 							{:else}
 								{#each value as post}
 									<Talkbox
+										file_id={post.file_id}
 										name={defauledata.username}
 										context={post.context}
 										ext={post.ext}

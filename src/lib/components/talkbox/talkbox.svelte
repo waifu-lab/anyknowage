@@ -2,6 +2,13 @@
 	import { FileText } from 'lucide-svelte'
 	import Loading from '$lib/components/loadingcircle.svelte'
 	import * as Dialog from '$lib/components/ui/dialog/index.js'
+	import axios from 'axios'
+	import Markdown from 'svelte-exmarkdown'
+	import type { Plugin } from 'svelte-exmarkdown'
+	import rehypeHighlight from 'rehype-highlight'
+	import 'highlight.js/styles/github.css'
+
+	export let file_id: string | undefined = undefined
 	export let avatar: string | undefined = undefined
 	export let name: string = 'user'
 	export let messages: string[] = []
@@ -10,6 +17,22 @@
 	export let ext: string | undefined = undefined
 	export let filename: string | undefined = undefined
 	export let isloading: boolean = false
+
+	const plugins: Plugin[] = [
+		{
+			rehypePlugin: [rehypeHighlight]
+		}
+	]
+	const get_file_text = async () => {
+		console.log(file_id)
+		try {
+			const data = await axios.get('http://localhost:8000/file_text?file_id=' + file_id)
+			return data.data.text
+		} catch (e) {
+			console.error(e)
+			throw new Error(`Failed to get file text`)
+		}
+	}
 </script>
 
 <div class="talkbox">
@@ -30,7 +53,17 @@
 							</div>
 						</div></Dialog.Trigger
 					>
-					<Dialog.Content class="sm:max-w-[425px]"></Dialog.Content>
+					<Dialog.Content class="max-h-[100vh] w-[50vw] !max-w-5xl overflow-y-auto">
+						{#await get_file_text()}
+							<p>Loading...</p>
+						{:then text}
+							<div class="markdown">
+								<Markdown md={text} {plugins} />
+							</div>
+						{:catch error}
+							<p>{error.message}</p>
+						{/await}
+					</Dialog.Content>
 				</Dialog.Root>
 			{/if}
 			{#if context != undefined}
