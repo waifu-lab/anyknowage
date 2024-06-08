@@ -1,6 +1,6 @@
 import hashlib
 from typing import Optional
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from attrs import define, field
 from haystack.dataclasses import Document
@@ -16,7 +16,7 @@ class File:
     url: Optional[str] = None
     document: Optional[Document] = None
     loader: Optional[callable] = None
-    uuid = uuid4()
+    uuid: UUID = None
     istext: bool = False
     context: str = None
 
@@ -27,6 +27,7 @@ class File:
         self.size = len(file)
         self.file_ext = ext
         self.context = file
+        self.uuid = uuid4()
 
     def is_null(self) -> bool:
         return self.size == 0

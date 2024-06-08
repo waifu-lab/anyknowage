@@ -14,6 +14,7 @@ from modules.knowladge.textfiles import parse_docx, parse_markdown, parse_pdf, p
 from modules.knowladge.url import parse_url
 from modules.knowladge.video import video_file_parser
 from util.logger import get_logger
+from uuid import uuid4
 
 logger = get_logger()
 ext_to_parser = {
@@ -104,7 +105,6 @@ def add_knowledge(data: dict | str):
         tmp.write(file.file.encode())
         tmp.seek(0)
         file.file = tmp
-
     get_mongodb().add_file(
         file_id=file.uuid,
         file=file.file,
