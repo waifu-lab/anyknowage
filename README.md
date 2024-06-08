@@ -6,6 +6,8 @@
 ![Docker Build](https://github.com/waifu-lab/anyknowage/actions/workflows/build_docker.yml/badge.svg)
 
  <!-- [docs](https://www.google.com) -->
+ 
+https://github.com/waifu-lab/anyknowage/assets/55632143/982e11a6-8cb2-4933-831b-7308c7863f28
 
 ## What is AnyKnowledge
 
