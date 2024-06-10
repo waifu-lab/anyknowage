@@ -83,7 +83,10 @@ services:
         - phillychi3/anyknowledge-server:latest
     environment:
       - REDIS_DB=redis:6379
-      - KNOWLEDGE_SERVER:anyknowledge:8000
+      - KNOWLEDGE_SERVER=http://anyknowledge:8000
+      - MONGODB_URL=mongodb:27017
+      - VECTOR_DB_URL=qdrant
+      - VECTOR_DB_PORT=6333
     restart: always
     command: dramatiq -p 4 -t 4 worker
     depends_on:
