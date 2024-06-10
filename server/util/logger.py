@@ -20,7 +20,7 @@ class Websocket_handler(logging.Handler):
 
     def notify(self, message: str):
         def do_request():
-            url = os.getenv("KNOWLEDGE_SERVER", "http://127.0.0.1:8000")
+            url = os.getenv("KNOWLEDGE_SERVER", "http://localhost:8000")
             requests.post(
                 f"{url}/socketio/logger",
                 json={"message": message},
