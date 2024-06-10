@@ -2,9 +2,10 @@ import axios from 'axios'
 import toast from 'svelte-french-toast'
 
 export const load = async () => {
+	const server_url = JSON.parse(localStorage.getItem('default') as string).server_url
 	const getposts = async (pos: number) => {
 		try {
-			const data = await axios.get('http://localhost:8000/files')
+			const data = await axios.get(server_url + '/files')
 			return data.data
 		} catch (e) {
 			console.error(e)
@@ -23,7 +24,7 @@ export const load = async () => {
 			const body = {
 				text: text
 			}
-			const data = await axios.post('http://localhost:8000/text', body)
+			const data = await axios.post(server_url + '/text', body)
 			toast.success('Post successfully', {
 				position: 'top-right',
 				style: 'background: var(--background); color: var(--foreground);'
@@ -44,7 +45,7 @@ export const load = async () => {
 			if (files === null) return
 			const body = new FormData()
 			body.append('file', new Blob([files]), filename)
-			const data = await axios.post('http://localhost:8000/upload', body, {
+			const data = await axios.post(server_url + '/upload', body, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}

@@ -2,6 +2,7 @@
 	import { z } from 'zod'
 
 	export const formSchema = z.object({
+		server_url: z.string().url(),
 		username: z.string().min(2).max(50),
 		avatar: z.string().url(),
 		botavatar: z.string().url()
@@ -39,6 +40,14 @@
 <Separator class="my-5" />
 
 <form use:enhance>
+	<Form.Field {form} name="server_url">
+		<Form.Control let:attrs>
+			<Form.Label>Server_url</Form.Label>
+			<Input {...attrs} bind:value={$formData.server_url} />
+		</Form.Control>
+		<Form.Description>Anyknowledge server url</Form.Description>
+		<Form.FieldErrors />
+	</Form.Field>
 	<Form.Field {form} name="username">
 		<Form.Control let:attrs>
 			<Form.Label>Username</Form.Label>

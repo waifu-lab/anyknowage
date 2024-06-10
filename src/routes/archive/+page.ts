@@ -17,7 +17,8 @@ export const load = async () => {
 	const getfilelist = async () => {
 		try {
 			// 好醜 但算了
-			const data = await axios.get('http://localhost:8000/files')
+			const server_url = JSON.parse(localStorage.getItem('default') as string).server_url
+			const data = await axios.get(server_url + '/files')
 			const files: Filetype[] = []
 			data.data.forEach((element: Element) => {
 				files.push({

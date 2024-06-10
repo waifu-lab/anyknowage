@@ -2,6 +2,7 @@ from loguru import logger
 import logging
 import requests
 import threading
+import os
 
 mainlogger = None
 
@@ -19,8 +20,9 @@ class Websocket_handler(logging.Handler):
 
     def notify(self, message: str):
         def do_request():
+            url = os.getenv("KNOWLEDGE_SERVER", "http://127.0.0.1:8000")
             requests.post(
-                "http://127.0.0.1:8000/socketio/logger",
+                f"{url}/socketio/logger",
                 json={"message": message},
             )
 

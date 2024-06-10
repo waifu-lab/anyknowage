@@ -12,6 +12,7 @@
 			localStorage.setItem(
 				'default',
 				JSON.stringify({
+					server_url: 'http://localhost:8000',
 					username: 'user',
 					avatar: 'https://cdn.discordapp.com/avatars/762484891945664542/a3d0e4d30b78ce30a2ed22b51bf80df4.png?size=1024',
 					botavatar:

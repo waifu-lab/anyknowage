@@ -4,7 +4,7 @@ let instance: Socket | null = null
 
 export function setup_socketio() {
 	if (!instance) {
-		instance = io('http://localhost:8000')
+		instance = io(JSON.parse(localStorage.getItem('default') as string).server_url)
 	}
 	return instance
 }

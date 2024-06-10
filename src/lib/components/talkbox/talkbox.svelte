@@ -17,6 +17,7 @@
 	export let ext: string | undefined = undefined
 	export let filename: string | undefined = undefined
 	export let isloading: boolean = false
+	const server_url = JSON.parse(localStorage.getItem('default') as string).server_url
 
 	const plugins: Plugin[] = [
 		{
@@ -26,7 +27,7 @@
 	const get_file_text = async () => {
 		console.log(file_id)
 		try {
-			const data = await axios.get('http://localhost:8000/file_text?file_id=' + file_id)
+			const data = await axios.get(server_url + '/file_text?file_id=' + file_id)
 			return data.data.text
 		} catch (e) {
 			console.error(e)

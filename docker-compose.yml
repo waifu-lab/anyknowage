@@ -55,6 +55,7 @@ services:
       - VECTOR_DB_URL=qdrant
       - VECTOR_DB_PORT=6333
       - MONGODB_URL=mongodb:27017
+      - REDIS_DB=redis:6379
     restart: always
     ports:
       - '8000:8000'
@@ -72,10 +73,11 @@ services:
     container_name: anyknowledge-worker
     environment:
       - REDIS_DB=redis:6379
+      - KNOWLEDGE_SERVER:anyknowledge:8000
     restart: always
     command: dramatiq -p 4 -t 4 worker
     depends_on:
-      - redis
+      - anyknowledge
     deploy:
       resources:
         limits:

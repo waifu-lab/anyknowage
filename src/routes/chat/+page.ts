@@ -3,9 +3,10 @@ import axios from 'axios'
 import toast from 'svelte-french-toast'
 
 export const load = (async () => {
+	const server_url = JSON.parse(localStorage.getItem('default') as string).server_url
 	const getchats = async (pos: number) => {
 		try {
-			const data = await axios.get('http://localhost:8000/chats')
+			const data = await axios.get(server_url + '/chats')
 			return data.data
 		} catch (e) {
 			console.error(e)
@@ -28,7 +29,7 @@ export const load = (async () => {
 				maxtoken: setting.maxtoken,
 				token: setting.openaikey
 			}
-			const data = await axios.post('http://localhost:8000/chat', body)
+			const data = await axios.post(server_url + '/chat', body)
 			return data.data
 		} catch (e) {
 			console.error(e)
