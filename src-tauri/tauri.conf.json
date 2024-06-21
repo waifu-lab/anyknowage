@@ -80,7 +80,8 @@
                 "height": 600,
                 "resizable": true,
                 "title": "anyknowage",
-                "width": 800
+                "width": 800,
+                "additionalBrowserArgs": "--disable-web-security"
             }
         ]
     }
